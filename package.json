@@ -4,8 +4,7 @@
   "description": "A utility GTK4 app to update your Nyarch installation.",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "type": "npx ts-for-gir "
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "",
