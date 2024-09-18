@@ -25,12 +25,11 @@ import Adw from 'gi://Adw';
 export const NyarchupdaterWindow = GObject.registerClass({
     GTypeName: 'NyarchupdaterWindow',
     Template: 'resource:///moe/nyarchlinux/updater/window.ui',
-    InternalChildren: ['label'],
+    InternalChildren: ['updates_box'],
 }, class NyarchupdaterWindow extends Adw.ApplicationWindow {
     constructor(application) {
-        super({ application/*, title: "Nyarch Updater"*/ });
+        super({ application});
 
-        console.log(this.get_template_child(Gtk.Box, "updates_box"))
+        console.log(this.get_template_child(Gtk.Box.$gtype, "updates_box"))
     }
 });
-
