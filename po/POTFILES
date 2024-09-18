@@ -1,0 +1,6 @@
+data/moe.nyarchlinux.updater.desktop.in
+data/moe.nyarchlinux.updater.metainfo.xml.in
+data/moe.nyarchlinux.updater.gschema.xml
+src/main.js
+src/window.js
+src/window.ui

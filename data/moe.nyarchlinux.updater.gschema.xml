@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="nyarchupdater">
+	<schema id="moe.nyarchlinux.updater" path="/moe/nyarchlinux/updater/">
+	</schema>
+</schemalist>
