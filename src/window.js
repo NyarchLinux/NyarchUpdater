@@ -1,6 +1,6 @@
 /* window.js
  *
- * Copyright 2024 Adam
+ * Copyright 2024 Nyarch Linux
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,15 +21,31 @@
 import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
+import Gio from 'gi://Gio';
+import Soup from 'gi://Soup';
 
 export const NyarchupdaterWindow = GObject.registerClass({
     GTypeName: 'NyarchupdaterWindow',
     Template: 'resource:///moe/nyarchlinux/updater/window.ui',
-    InternalChildren: ['updates_box'],
+    InternalChildren: ['updates_box', 'refresh_button'],
 }, class NyarchupdaterWindow extends Adw.ApplicationWindow {
     constructor(application) {
         super({ application});
 
-        console.log(this.get_template_child(Gtk.Box.$gtype, "updates_box"))
+        this._refresh_button.connect("clicked", async () => {
+            await this.fetchUpdatesEndpoint();
+        });
+    }
+
+    async fetchUpdatesEndpoint() {
+        try {
+            const session = new Soup.Session();
+            const message = Soup.soup_message_new("GET", "https://google.com");
+            const json = session.send_async(session, message)
+
+            console.log(json);
+        } catch (err) {
+            console.log(err);
+        }
     }
 });
