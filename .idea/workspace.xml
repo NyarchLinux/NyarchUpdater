@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="fix: finally made a request, made the update check work">
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: made a guide">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
     </list>
@@ -81,7 +81,7 @@
       <updated>1726666746816</updated>
       <workItem from="1726666747863" duration="9789000" />
       <workItem from="1726679609621" duration="1979000" />
-      <workItem from="1727273274228" duration="5015000" />
+      <workItem from="1727273274228" duration="6322000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -115,7 +115,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727278296822</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat: made a guide">
+      <option name="closed" value="true" />
+      <created>1727278490676</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1727278490676</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -129,6 +137,7 @@
     <MESSAGE value="feat: started making the app" />
     <MESSAGE value="feat: started making requests" />
     <MESSAGE value="fix: finally made a request, made the update check work" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: finally made a request, made the update check work" />
+    <MESSAGE value="feat: made a guide" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: made a guide" />
   </component>
 </project>

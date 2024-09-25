@@ -22,6 +22,7 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Soup from 'gi://Soup';
 import GLib from 'gi://GLib';
+import Gio from 'gi://Gio';
 
 export const NyarchupdaterWindow = GObject.registerClass({
     GTypeName: 'NyarchupdaterWindow',
@@ -32,10 +33,14 @@ export const NyarchupdaterWindow = GObject.registerClass({
         super({ application});
 
         this._refresh_button.connect("clicked", async () => {
-            console.log(await this.fetchUpdatesEndpoint());
+            console.log(await this.fetchLocalUpdates().catch(console.error));
         });
     }
 
+    /**
+     * Used to fetch the releases from the endpoint
+     * @returns {Promise<string>}
+     */
     fetchUpdatesEndpoint() {
         return new Promise(async (resolve, reject) => {
             try {
@@ -62,5 +67,48 @@ export const NyarchupdaterWindow = GObject.registerClass({
                 reject(err);
             }
         })
+    }
+
+    /**
+     * Package information
+     * @typedef UpdatePackageInfo
+     * @prop {string} name
+     * @prop {string} current
+     * @prop {string} latest
+     */
+    /**
+     * Used to fetch local package updates using Pacman
+     * @returns {Promise<Array<UpdatePackageInfo>>}
+     */
+    fetchLocalUpdates() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const proc = Gio.Subprocess.new(['pacman', '-Qu'], Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE);
+                const cancellable = new Gio.Cancellable();
+                proc.communicate_utf8_async(null, null, (...args) => {
+                    console.log(args);
+                });
+
+                if (proc.get_successful())
+                    console.log(stdout);
+                else
+                    console.log('the process failed');
+            } catch (e) {
+                reject(e)
+            }
+        });
+    }
+
+    /**
+     * Update types
+     * @typedef {"local"|"release"|"all"|string} UpdateType
+     */
+    /**
+     * Used to update the Updates Box in the window.
+     * @param {UpdateType} type
+     * @returns {Promise<void>}
+     */
+    async updateUpdatesBox(type = "all") {
+        // TODO write this
     }
 });
