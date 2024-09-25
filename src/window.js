@@ -19,10 +19,9 @@
  */
 
 import GObject from 'gi://GObject';
-import Gtk from 'gi://Gtk';
-import Adw from 'gi://Adw';
-import Gio from 'gi://Gio';
+import Adw from 'gi://Adw?version=1';
 import Soup from 'gi://Soup';
+import GLib from 'gi://GLib';
 
 export const NyarchupdaterWindow = GObject.registerClass({
     GTypeName: 'NyarchupdaterWindow',
@@ -33,19 +32,35 @@ export const NyarchupdaterWindow = GObject.registerClass({
         super({ application});
 
         this._refresh_button.connect("clicked", async () => {
-            await this.fetchUpdatesEndpoint();
+            console.log(await this.fetchUpdatesEndpoint());
         });
     }
 
-    async fetchUpdatesEndpoint() {
-        try {
-            const session = new Soup.Session();
-            const message = Soup.soup_message_new("GET", "https://google.com");
-            const json = session.send_async(session, message)
-
-            console.log(json);
-        } catch (err) {
-            console.log(err);
-        }
+    fetchUpdatesEndpoint() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const session = Soup.Session.new();
+                let message = new Soup.Message({
+                    method: "GET",
+                    uri: GLib.uri_parse("https://nyarchlinux.moe/update.json", GLib.UriFlags.NONE)
+                });
+                session.send_and_read_async(
+                    message,
+                    GLib.PRIORITY_DEFAULT,
+                    null,
+                    (session, result) => {
+                        if (message.get_status() === Soup.Status.OK) {
+                            let bytes = session.send_and_read_finish(result);
+                            let decoder = new TextDecoder('utf-8');
+                            const response = decoder.decode(bytes.get_data());
+                            const json = JSON.parse(response);
+                            resolve(json);
+                        }
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        })
     }
 });
