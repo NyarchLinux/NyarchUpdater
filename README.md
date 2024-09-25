@@ -21,7 +21,7 @@ You can install Nyarch Updater via Flatpak. It should be pre-installed from Nyar
 
 ### Manual
 
-*soon*
+I ain't got no single idea on how you could open this project, but I guess you'll open it with gnome builder?
 
 <!-- TODO write the packaging and installation through pkg. -->
 
