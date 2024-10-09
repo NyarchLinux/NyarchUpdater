@@ -109,6 +109,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
                     let [,stdout,] = proc.communicate_utf8_finish(res);
                     if (proc.get_successful()) {
                         const lines = stdout.split('\n');
+                        console.log(lines);
                         const updateList = [];
                         for (const line of lines) {
                             const match = line.match(/(\S+)\s(\S+)\s->\s(\S+)/); // regex to match the package name, current version, and latest version from "packagename current -> latest"
@@ -121,6 +122,8 @@ export const NyarchupdaterWindow = GObject.registerClass({
                             }
                         }
                         resolve(updateList);
+                    } else {
+                        resolve([]);
                     }
                 });
             } catch (e) {
@@ -144,31 +147,40 @@ export const NyarchupdaterWindow = GObject.registerClass({
         if (this._updates_box_childs.length) this._updates_box_childs.forEach(child => updatesBox.remove(child));
         if (endpointUpdates) {
             const releaseUpdateLabel = Gtk.Label.new(null);
-            releaseUpdateLabel.set_markup("<big><b>Release Updates</b></big>");
+            releaseUpdateLabel.set_markup("<span line_height=\"2\" size=\"x-large\"><b>Release Updates</b></span>");
             releaseUpdateLabel.set_halign(Gtk.Align.START);
             this._updates_box_childs.push(releaseUpdateLabel);
             updatesBox.append(releaseUpdateLabel);
-            const label = Gtk.Label.new(`New version available: ${endpointUpdates.version}`);
+            const label = Gtk.Label.new(null);
+            label.set_markup(`<span color="#f9c89f"><b>New release available: <span font_weight="ultrabold">${endpointUpdates.version}</span></b></span>`);
             label.set_halign(Gtk.Align.START);
             updatesBox.append(label);
             this._updates_box_childs.push(label);
         } else {
             const label = Gtk.Label.new(null);
-            label.set_markup("<big><b>You are up to date with the releases!</b></big>");
+            label.set_markup("<span line_height=\"2\" size=\"x-large\"><b>You are up to date with the releases!</b></span>");
             label.set_halign(Gtk.Align.START);
             updatesBox.append(label);
             this._updates_box_childs.push(label);
         }
-        const localUpdateLabel = Gtk.Label.new(null);
-        localUpdateLabel.set_markup("<big><b>Local Updates</b></big>");
-        localUpdateLabel.set_halign(Gtk.Align.START);
-        this._updates_box_childs.push(localUpdateLabel);
-        updatesBox.append(localUpdateLabel);
-        for (const update of localUpdates) {
-            const label = Gtk.Label.new(`${update.name} ${update.current} -> ${update.latest}`);
+        if (!localUpdates.length) {
+            const label = Gtk.Label.new(null);
+            label.set_markup("<span line_height=\"2\" size=\"x-large\"><b>You are up to date with the package packages!</b></span>");
             label.set_halign(Gtk.Align.START);
             updatesBox.append(label);
             this._updates_box_childs.push(label);
+        } else {
+            const localUpdateLabel = Gtk.Label.new(null);
+            localUpdateLabel.set_markup("<span line_height=\"2\" size=\"x-large\"><b>Package Updates</b></span>");
+            localUpdateLabel.set_halign(Gtk.Align.START);
+            this._updates_box_childs.push(localUpdateLabel);
+            updatesBox.append(localUpdateLabel);
+            for (const update of localUpdates) {
+                const label = Gtk.Label.new(`${update.name} ${update.current} -> ${update.latest}`);
+                label.set_halign(Gtk.Align.START);
+                updatesBox.append(label);
+                this._updates_box_childs.push(label);
+            }
         }
     }
 

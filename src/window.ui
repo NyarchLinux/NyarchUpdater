@@ -60,14 +60,23 @@
               </object>
             </child>
             <child>
-              <object class="GtkBox" id="updates_box">
-                <property name="orientation">vertical</property>
-                <property name="hexpand">FALSE</property>
-                <property name="halign">GTK_ALIGN_START</property>
-                <property name="margin-top">20</property>
-                <property name="margin-bottom">20</property>
-                <property name="margin-start">20</property>
-                <property name="margin-end">20</property>
+              <object class="GtkScrolledWindow">
+                <property name="has-frame">false</property>
+                <property name="hexpand">TRUE</property>
+                <property name="vexpand">TRUE</property>
+                <property name="min-content-height">400</property>
+                <property name="max-content-height">400</property>
+                <child>
+                  <object class="GtkBox" id="updates_box">
+                    <property name="orientation">vertical</property>
+                    <property name="hexpand">FALSE</property>
+                    <property name="halign">GTK_ALIGN_START</property>
+                    <property name="margin-top">20</property>
+                    <property name="margin-bottom">20</property>
+                    <property name="margin-start">20</property>
+                    <property name="margin-end">20</property>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
