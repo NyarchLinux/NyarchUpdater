@@ -23,6 +23,8 @@ import Adw from 'gi://Adw?version=1';
 import Soup from 'gi://Soup';
 import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
+import Gtk from 'gi://Gtk?version=4.0';
+import Pango from 'gi://Pango';
 
 export const NyarchupdaterWindow = GObject.registerClass({
     GTypeName: 'NyarchupdaterWindow',
@@ -33,8 +35,14 @@ export const NyarchupdaterWindow = GObject.registerClass({
         super({ application});
 
         this._refresh_button.connect("clicked", async () => {
-            console.log(await this.fetchLocalUpdates().catch(console.error));
+            await this.checkForUpdates().catch(console.error);
         });
+        this.launcher = new Gio.SubprocessLauncher({
+            flags: (Gio.SubprocessFlags.STDOUT_PIPE |
+                Gio.SubprocessFlags.STDERR_PIPE)
+        });
+        this.launcher.setenv("LANG", "C", true);
+        this._updates_box_childs = [];
     }
 
     /**
@@ -59,7 +67,20 @@ export const NyarchupdaterWindow = GObject.registerClass({
                             let decoder = new TextDecoder('utf-8');
                             const response = decoder.decode(bytes.get_data());
                             const json = JSON.parse(response);
-                            resolve(json);
+                            // make const current that is the content of the /version file in the filesystem
+                            const [ok, current] = GLib.file_get_contents("/version");
+                            if (!ok) {
+                                reject("Could not read /version file");
+                                return;
+                            }
+                            const currentVersion = new TextDecoder().decode(current).trim().match(/.{1,2}/g);
+                            currentVersion.pop();
+                            const newer = json[currentVersion.join('.')];
+                            if (!newer) {
+                                resolve(null);
+                            } else {
+                                resolve(newer);
+                            }
                         }
                     }
                 );
@@ -77,22 +98,31 @@ export const NyarchupdaterWindow = GObject.registerClass({
      * @prop {string} latest
      */
     /**
-     * Used to fetch local package updates using Pacman
+     * Used to fetch local package updates using checkupdates
      * @returns {Promise<Array<UpdatePackageInfo>>}
      */
     fetchLocalUpdates() {
         return new Promise(async (resolve, reject) => {
             try {
-                const proc = Gio.Subprocess.new(['pacman', '-Qu'], Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE);
-                const cancellable = new Gio.Cancellable();
-                proc.communicate_utf8_async(null, null, (...args) => {
-                    console.log(args);
+                let proc = this.launcher.spawnv(['flatpak-spawn', '--host', 'bash', '-c', "/usr/bin/checkupdates"]);
+                proc.communicate_utf8_async(null, null, (proc, res) => {
+                    let [,stdout,] = proc.communicate_utf8_finish(res);
+                    if (proc.get_successful()) {
+                        const lines = stdout.split('\n');
+                        const updateList = [];
+                        for (const line of lines) {
+                            const match = line.match(/(\S+)\s(\S+)\s->\s(\S+)/); // regex to match the package name, current version, and latest version from "packagename current -> latest"
+                            if (match) {
+                                updateList.push({
+                                    name: match[1],
+                                    current: match[2],
+                                    latest: match[3]
+                                });
+                            }
+                        }
+                        resolve(updateList);
+                    }
                 });
-
-                if (proc.get_successful())
-                    console.log(stdout);
-                else
-                    console.log('the process failed');
             } catch (e) {
                 reject(e)
             }
@@ -105,10 +135,62 @@ export const NyarchupdaterWindow = GObject.registerClass({
      */
     /**
      * Used to update the Updates Box in the window.
-     * @param {UpdateType} type
+     * @param {any[]} localUpdates
+     * @param {any[]} endpointUpdates
      * @returns {Promise<void>}
      */
-    async updateUpdatesBox(type = "all") {
-        // TODO write this
+    async updateUpdatesBox(localUpdates, endpointUpdates) {
+        const updatesBox = this._updates_box;
+        if (this._updates_box_childs.length) this._updates_box_childs.forEach(child => updatesBox.remove(child));
+        if (endpointUpdates) {
+            const releaseUpdateLabel = Gtk.Label.new(null);
+            releaseUpdateLabel.set_markup("<big><b>Release Updates</b></big>");
+            releaseUpdateLabel.set_halign(Gtk.Align.START);
+            this._updates_box_childs.push(releaseUpdateLabel);
+            updatesBox.append(releaseUpdateLabel);
+            const label = Gtk.Label.new(`New version available: ${endpointUpdates.version}`);
+            label.set_halign(Gtk.Align.START);
+            updatesBox.append(label);
+            this._updates_box_childs.push(label);
+        } else {
+            const label = Gtk.Label.new(null);
+            label.set_markup("<big><b>You are up to date with the releases!</b></big>");
+            label.set_halign(Gtk.Align.START);
+            updatesBox.append(label);
+            this._updates_box_childs.push(label);
+        }
+        const localUpdateLabel = Gtk.Label.new(null);
+        localUpdateLabel.set_markup("<big><b>Local Updates</b></big>");
+        localUpdateLabel.set_halign(Gtk.Align.START);
+        this._updates_box_childs.push(localUpdateLabel);
+        updatesBox.append(localUpdateLabel);
+        for (const update of localUpdates) {
+            const label = Gtk.Label.new(`${update.name} ${update.current} -> ${update.latest}`);
+            label.set_halign(Gtk.Align.START);
+            updatesBox.append(label);
+            this._updates_box_childs.push(label);
+        }
+    }
+
+    /**
+     * Used to check for updates (both local and from the endpoint)
+     * @returns {Promise<void>}
+     */
+    async checkForUpdates() {
+        this._refresh_button.set_sensitive(false);
+        const box = Gtk.CenterBox.new();
+        const spinner = Gtk.Spinner.new();
+        const loadingLabel = Gtk.Label.new("Checking for updates...");
+        const doneLabel = Gtk.Label.new("Check for updates");
+        box.set_start_widget(spinner);
+        box.set_center_widget(loadingLabel);
+        this._refresh_button.set_child(box);
+        spinner.start();
+        const localUpdates = await this.fetchLocalUpdates();
+        const endpointUpdates = await this.fetchUpdatesEndpoint();
+        this._refresh_button.set_sensitive(true);
+        spinner.stop();
+        box.set_center_widget(doneLabel);
+        this.updateUpdatesBox(localUpdates, endpointUpdates).catch(console.error);
     }
 });
