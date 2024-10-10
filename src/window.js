@@ -29,7 +29,7 @@ import Pango from 'gi://Pango';
 export const NyarchupdaterWindow = GObject.registerClass({
     GTypeName: 'NyarchupdaterWindow',
     Template: 'resource:///moe/nyarchlinux/updater/window.ui',
-    InternalChildren: ['updates_box', 'refresh_button'],
+    InternalChildren: ['updates_box', 'refresh_button', 'arch_label', 'arch_spinner', 'arch_success', 'arch_button'],
 }, class NyarchupdaterWindow extends Adw.ApplicationWindow {
     constructor(application) {
         super({ application});
@@ -159,16 +159,22 @@ export const NyarchupdaterWindow = GObject.registerClass({
             updatesBox.append(label);
             this._updates_box_childs.push(label);
         }
-        const localUpdateLabel = Gtk.Label.new(null);
-        localUpdateLabel.set_markup("<big><b>Local Updates</b></big>");
-        localUpdateLabel.set_halign(Gtk.Align.START);
-        this._updates_box_childs.push(localUpdateLabel);
-        updatesBox.append(localUpdateLabel);
+        var text = ""
+        var count = 0
         for (const update of localUpdates) {
-            const label = Gtk.Label.new(`${update.name} ${update.current} -> ${update.latest}`);
-            label.set_halign(Gtk.Align.START);
-            updatesBox.append(label);
-            this._updates_box_childs.push(label);
+            text += `${update.name} ${update.current} -> ${update.latest} \n`;
+            count++;
+        }
+        if (count == 0) {
+            this._arch_label.set_label("No update needed");
+            this._arch_success.set_visible(true);
+            this._arch_spinner.set_visible(false);
+            this._arch_button.set_visible(false);
+        } else {
+            this._arch_label.set_label(text);
+            this._arch_success.set_visible(false);
+            this._arch_spinner.set_visible(false);
+            this._arch_button.set_visible(true);
         }
     }
 

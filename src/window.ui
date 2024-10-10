@@ -56,12 +56,12 @@
                     <property name="margin-top">20</property>
                     <property name="hexpand">true</property>
                     <child>
-                      <object class="AdwExpanderRow" id="arch-row">
+                      <object class="AdwExpanderRow" id="arch_row">
                         <property name="title">Arch Linux Updates</property>
                         <property name="subtitle">Updates to packages and programs</property>
                         <property name="enable-expansion">true</property>
                         <child type="suffix">
-                          <object class="GtkButton" id="arch-button">
+                          <object class="GtkButton" id="arch_button">
                             <property name="label">Update</property>
                             <property name="valign">center</property>
                             <property name="visible">false</property>
@@ -71,14 +71,14 @@
                           </object>
                         </child>
                         <child type="suffix">
-                          <object class="GtkSpinner" id="arch-spinner">
+                          <object class="GtkSpinner" id="arch_spinner">
                             <property name="valign">center</property>
                             <property name="spinning">true</property>
                             <property name="visible">true</property>
                           </object>
                         </child>
                         <child type="suffix">
-                          <object class="GtkButton" id="arch-success">
+                          <object class="GtkButton" id="arch_success">
                             <property name="valign">center</property>
                             <property name="icon-name">check-round-outline-symbolic</property>
                             <property name="visible">false</property>
@@ -88,14 +88,28 @@
                             </style>
                           </object>
                         </child>
+                        <child>
+                          <object class="GtkScrolledWindow">
+                            <property name="hexpand">true</property>
+                            <property name="max-content-height">150</property>
+                            <property name="propagate-natural-height">true</property>
+                            <property name="margin-start">10</property>
+                            <property name="margin-end">10</property>
+                            <child>
+                              <object class="GtkLabel" id="arch_label">
+                                <property name="label">Checking for updates...</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   <child>
-                      <object class="AdwExpanderRow" id="flatpak-row">
+                      <object class="AdwExpanderRow" id="flatpak_row">
                         <property name="title">Flatpak Updates</property>
                         <property name="subtitle">Updates to flatpak programs</property>
                         <child type="suffix">
-                          <object class="GtkButton" id="flatpak-button">
+                          <object class="GtkButton" id="flatpak_button">
                             <property name="label">Update</property>
                             <property name="valign">center</property>
                             <property name="visible">false</property>
@@ -105,14 +119,14 @@
                           </object>
                         </child>
                         <child type="suffix">
-                          <object class="GtkSpinner" id="flatpak-spinner">
+                          <object class="GtkSpinner" id="flatpak_spinner">
                             <property name="valign">center</property>
                             <property name="spinning">true</property>
                             <property name="visible">true</property>
                           </object>
                         </child>
                         <child type="suffix">
-                          <object class="GtkButton" id="flatpak-success">
+                          <object class="GtkButton" id="flatpak_success">
                             <property name="valign">center</property>
                             <property name="icon-name">check-round-outline-symbolic</property>
                             <property name="visible">false</property>
@@ -125,11 +139,11 @@
                       </object>
                     </child>
                     <child>
-                      <object class="AdwActionRow" id="nyarch-row">
+                      <object class="AdwActionRow" id="nyarch_row">
                         <property name="title">Nyarch Updates</property>
                         <property name="subtitle">Updates to user configuration and Nyarch</property>
                         <child type="suffix">
-                          <object class="GtkButton" id="nyarch-button">
+                          <object class="GtkButton" id="nyarch_button">
                             <property name="label">Update</property>
                             <property name="valign">center</property>
                             <property name="visible">false</property>
@@ -139,14 +153,14 @@
                           </object>
                         </child>
                         <child type="suffix">
-                          <object class="GtkSpinner" id="nyarch-spinner">
+                          <object class="GtkSpinner" id="nyarch_spinner">
                             <property name="valign">center</property>
                             <property name="spinning">true</property>
                             <property name="visible">true</property>
                           </object>
                         </child>
                         <child type="suffix">
-                          <object class="GtkButton" id="nyarch-success">
+                          <object class="GtkButton" id="nyarch_success">
                             <property name="valign">center</property>
                             <property name="icon-name">check-round-outline-symbolic</property>
                             <property name="visible">false</property>
