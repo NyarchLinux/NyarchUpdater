@@ -27,7 +27,7 @@
             <child>
               <object class="GtkBox">
                 <property name="orientation">vertical</property>
-                <property name="hexpand">FALSE</property>
+                <property name="hexpand">true</property>
                 <property name="halign">GTK_ALIGN_CENTER</property>
                 <child>
                   <object class="GtkImage">
@@ -49,6 +49,115 @@
                     <style>
                       <class name="subtitle-1"/>
                     </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwPreferencesGroup">
+                    <property name="margin-top">20</property>
+                    <property name="hexpand">true</property>
+                    <child>
+                      <object class="AdwExpanderRow" id="arch-row">
+                        <property name="title">Arch Linux Updates</property>
+                        <property name="subtitle">Updates to packages and programs</property>
+                        <property name="enable-expansion">true</property>
+                        <child type="suffix">
+                          <object class="GtkButton" id="arch-button">
+                            <property name="label">Update</property>
+                            <property name="valign">center</property>
+                            <property name="visible">false</property>
+                            <style>
+                              <class name="suggested-action" />
+                            </style>
+                          </object>
+                        </child>
+                        <child type="suffix">
+                          <object class="GtkSpinner" id="arch-spinner">
+                            <property name="valign">center</property>
+                            <property name="spinning">true</property>
+                            <property name="visible">true</property>
+                          </object>
+                        </child>
+                        <child type="suffix">
+                          <object class="GtkButton" id="arch-success">
+                            <property name="valign">center</property>
+                            <property name="icon-name">check-round-outline-symbolic</property>
+                            <property name="visible">false</property>
+                            <style>
+                              <class name="flat"></class>
+                              <class name="success"></class>
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  <child>
+                      <object class="AdwExpanderRow" id="flatpak-row">
+                        <property name="title">Flatpak Updates</property>
+                        <property name="subtitle">Updates to flatpak programs</property>
+                        <child type="suffix">
+                          <object class="GtkButton" id="flatpak-button">
+                            <property name="label">Update</property>
+                            <property name="valign">center</property>
+                            <property name="visible">false</property>
+                            <style>
+                              <class name="suggested-action" />
+                            </style>
+                          </object>
+                        </child>
+                        <child type="suffix">
+                          <object class="GtkSpinner" id="flatpak-spinner">
+                            <property name="valign">center</property>
+                            <property name="spinning">true</property>
+                            <property name="visible">true</property>
+                          </object>
+                        </child>
+                        <child type="suffix">
+                          <object class="GtkButton" id="flatpak-success">
+                            <property name="valign">center</property>
+                            <property name="icon-name">check-round-outline-symbolic</property>
+                            <property name="visible">false</property>
+                            <style>
+                              <class name="flat"></class>
+                              <class name="success"></class>
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow" id="nyarch-row">
+                        <property name="title">Nyarch Updates</property>
+                        <property name="subtitle">Updates to user configuration and Nyarch</property>
+                        <child type="suffix">
+                          <object class="GtkButton" id="nyarch-button">
+                            <property name="label">Update</property>
+                            <property name="valign">center</property>
+                            <property name="visible">false</property>
+                            <style>
+                              <class name="suggested-action" />
+                            </style>
+                          </object>
+                        </child>
+                        <child type="suffix">
+                          <object class="GtkSpinner" id="nyarch-spinner">
+                            <property name="valign">center</property>
+                            <property name="spinning">true</property>
+                            <property name="visible">true</property>
+                          </object>
+                        </child>
+                        <child type="suffix">
+                          <object class="GtkButton" id="nyarch-success">
+                            <property name="valign">center</property>
+                            <property name="icon-name">check-round-outline-symbolic</property>
+                            <property name="visible">false</property>
+                            <style>
+                              <class name="flat"></class>
+                              <class name="success"></class>
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
                   </object>
                 </child>
                 <child>
