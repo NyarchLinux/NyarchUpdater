@@ -1,6 +1,6 @@
 /* main.js
  *
- * Copyright 2024 Adam
+ * Copyright 2024 Nyarch Linux
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 
 import GObject from 'gi://GObject';
 import Gio from 'gi://Gio';
-import Gtk from 'gi://Gtk?version=4.0';
 import Adw from 'gi://Adw?version=1';
 
 import { NyarchupdaterWindow } from './window.js';

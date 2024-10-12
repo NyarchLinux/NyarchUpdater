@@ -46,9 +46,6 @@ export const NyarchupdaterWindow = GObject.registerClass({
     constructor(application) {
         super({ application});
 
-        this._refresh_button.connect("clicked", async () => {
-            await this.checkForUpdates().catch(console.error);
-        });
         this.launcher = new Gio.SubprocessLauncher({
             flags: (Gio.SubprocessFlags.STDOUT_PIPE |
                 Gio.SubprocessFlags.STDERR_PIPE)
@@ -202,6 +199,14 @@ export const NyarchupdaterWindow = GObject.registerClass({
         this.setState("arch");
         this.setState("flatpak");
         this.setState("nyarch");
+
+        this._refresh_button.connect("clicked", async () => {
+            await this.checkForUpdates().catch(console.error);
+        });
+        this._arch_button.connect("clicked", async () => {
+            await this.updateArch().catch(console.error);
+        });
+        this.checkForUpdates().catch(console.error);
     }
 
     /**
@@ -313,5 +318,10 @@ export const NyarchupdaterWindow = GObject.registerClass({
                 reject(err);
             }
         })
+    }
+
+    async updateArch() {
+        // gnome-terminal -- /bin/sh -c \"sudo pacman -Syu ; echo Done - Press enter to exit; read _\" command
+        await this.launcher.spawnv(['flatpak-spawn', '--host bash', '-c', '\"gnome-terminal -- /bin/sh -c sudo pacman -Syu ; echo Done - Press enter to exit; read _ \"']);
     }
 });
