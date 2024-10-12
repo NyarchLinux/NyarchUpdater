@@ -38,7 +38,7 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "file:///home/adam/Projets"
+                    "url" : "."
                 }
             ]
         }

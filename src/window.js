@@ -24,12 +24,11 @@ import Soup from 'gi://Soup';
 import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
-import Pango from 'gi://Pango';
 
 export const NyarchupdaterWindow = GObject.registerClass({
     GTypeName: 'NyarchupdaterWindow',
     Template: 'resource:///moe/nyarchlinux/updater/window.ui',
-    InternalChildren: ['updates_box', 'refresh_button'],
+    InternalChildren: ['updates_box', 'refresh_button', 'arch_label', 'arch_spinner', 'arch_success', 'arch_button'],
 }, class NyarchupdaterWindow extends Adw.ApplicationWindow {
     constructor(application) {
         super({ application});
@@ -43,6 +42,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
         });
         this.launcher.setenv("LANG", "C", true);
         this._updates_box_childs = [];
+        this.init();
     }
 
     /**
@@ -109,7 +109,6 @@ export const NyarchupdaterWindow = GObject.registerClass({
                     let [,stdout,] = proc.communicate_utf8_finish(res);
                     if (proc.get_successful()) {
                         const lines = stdout.split('\n');
-                        console.log(lines);
                         const updateList = [];
                         for (const line of lines) {
                             const match = line.match(/(\S+)\s(\S+)\s->\s(\S+)/); // regex to match the package name, current version, and latest version from "packagename current -> latest"
@@ -164,23 +163,16 @@ export const NyarchupdaterWindow = GObject.registerClass({
             this._updates_box_childs.push(label);
         }
         if (!localUpdates.length) {
-            const label = Gtk.Label.new(null);
-            label.set_markup("<span line_height=\"2\" size=\"x-large\"><b>You are up to date with the package packages!</b></span>");
-            label.set_halign(Gtk.Align.START);
-            updatesBox.append(label);
-            this._updates_box_childs.push(label);
+            // the count variable you putted in the for loop is not used, so I removed it, as count is literally the length of the array. As for the text, simply join() the array with a newline character
+            this._arch_label.set_label("No update needed");
+            this._arch_success.set_visible(true);
+            this._arch_spinner.set_visible(false);
+            this._arch_button.set_visible(false);
         } else {
-            const localUpdateLabel = Gtk.Label.new(null);
-            localUpdateLabel.set_markup("<span line_height=\"2\" size=\"x-large\"><b>Package Updates</b></span>");
-            localUpdateLabel.set_halign(Gtk.Align.START);
-            this._updates_box_childs.push(localUpdateLabel);
-            updatesBox.append(localUpdateLabel);
-            for (const update of localUpdates) {
-                const label = Gtk.Label.new(`${update.name} ${update.current} -> ${update.latest}`);
-                label.set_halign(Gtk.Align.START);
-                updatesBox.append(label);
-                this._updates_box_childs.push(label);
-            }
+            this._arch_label.set_label(text);
+            this._arch_success.set_visible(false);
+            this._arch_spinner.set_visible(false);
+            this._arch_button.set_visible(true);
         }
     }
 
