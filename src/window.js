@@ -64,38 +64,20 @@ export const NyarchupdaterWindow = GObject.registerClass({
     fetchUpdatesEndpoint() {
         return new Promise(async (resolve, reject) => {
             try {
-                const session = Soup.Session.new();
-                let message = new Soup.Message({
-                    method: "GET",
-                    uri: GLib.uri_parse("https://nyarchlinux.moe/update.json", GLib.UriFlags.NONE)
-                });
-                session.send_and_read_async(
-                    message,
-                    GLib.PRIORITY_DEFAULT,
-                    null,
-                    (session, result) => {
-                        if (message.get_status() === Soup.Status.OK) {
-                            let bytes = session.send_and_read_finish(result);
-                            let decoder = new TextDecoder('utf-8');
-                            const response = decoder.decode(bytes.get_data());
-                            const json = JSON.parse(response);
-                            // make const current that is the content of the /version file in the filesystem
-                            const [ok, current] = GLib.file_get_contents("/version");
-                            if (!ok) {
-                                reject("Could not read /version file");
-                                return;
-                            }
-                            const currentVersion = new TextDecoder().decode(current).trim().match(/.{1,2}/g);
-                            currentVersion.pop();
-                            const newer = json[currentVersion.join('.')];
-                            if (!newer) {
-                                resolve(null);
-                            } else {
-                                resolve(newer);
-                            }
-                        }
-                    }
-                );
+                const json = await this.fetch("https://nyarchlinux.moe/update.json");
+                const [ok, current] = GLib.file_get_contents("/version");
+                if (!ok) {
+                    reject("Could not read /version file");
+                    return;
+                }
+                const currentVersion = new TextDecoder().decode(current).trim().match(/.{1,2}/g);
+                currentVersion.pop();
+                const newer = json[currentVersion.join('.')];
+                if (!newer) {
+                    resolve(null);
+                } else {
+                    resolve(newer);
+                }
             } catch (err) {
                 reject(err);
             }
@@ -104,74 +86,60 @@ export const NyarchupdaterWindow = GObject.registerClass({
 
     /**
      * Package information
-     * @typedef UpdatePackageInfo
+     * @typedef ArchUpdatePackageInfo
      * @prop {string} name
      * @prop {string} current
      * @prop {string} latest
      */
     /**
      * Used to fetch local package updates using checkupdates
-     * @returns {Promise<Array<UpdatePackageInfo>>}
+     * @returns {Promise<Array<ArchUpdatePackageInfo>>}
      */
-    fetchLocalUpdates() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                let proc = this.launcher.spawnv(['flatpak-spawn', '--host', 'bash', '-c', "/usr/bin/checkupdates"]);
-                proc.communicate_utf8_async(null, null, (proc, res) => {
-                    let [,stdout,] = proc.communicate_utf8_finish(res);
-                    if (proc.get_successful()) {
-                        const lines = stdout.split('\n');
-                        const updateList = [];
-                        for (const line of lines) {
-                            const match = line.match(/(\S+)\s(\S+)\s->\s(\S+)/); // regex to match the package name, current version, and latest version from "packagename current -> latest"
-                            if (match) {
-                                updateList.push({
-                                    name: match[1],
-                                    current: match[2],
-                                    latest: match[3]
-                                });
-                            }
-                        }
-                        resolve(updateList);
-                    } else {
-                        resolve([]);
-                    }
+    async fetchLocalUpdates() {
+        const stdout = await this.spawnv(['flatpak-spawn', '--host', 'bash', '-c', '/usr/bin/checkupdates']).catch(this.handleError);
+        const lines = stdout.split('\n');
+        const updateList = [];
+        for (const line of lines) {
+            // regex to match the package name, current version, and latest version from "packagename current -> latest"
+            const match = line.match(/(\S+)\s(\S+)\s->\s(\S+)/);
+            if (match) {
+                updateList.push({
+                    name: match[1],
+                    current: match[2],
+                    latest: match[3]
                 });
-            } catch (e) {
-                reject(e)
             }
-        });
+        }
+        return updateList;
     }
 
-    fetchFlatpakUpdates() {
-        // flatpak remote-ls --updates
-        return new Promise(async (resolve, reject) => {
-            try {
-                let proc = this.launcher.spawnv(['flatpak-spawn', '--host', 'bash', '-c', "flatpak remote-ls --updates"]);
-                proc.communicate_utf8_async(null, null, (proc, res) => {
-                    let [,stdout,] = proc.communicate_utf8_finish(res);
-                    if (proc.get_successful()) {
-                        const lines = stdout.split('\n');
-                        const updateList = [];
-                        for (const line of lines) {
-                            const match = line.match(/(\S+)\s(\S+)\s->\s(\S+)/); // regex to match the package name, current version, and latest version from "packagename current -> latest"
-                            if (match) {
-                                updateList.push({
-                                    name: match[1],
-                                    current: match[2],
-                                    latest: match[3]
-                                });
-                            }
-                        }
-                        resolve(updateList);
-                    } else {
-                        resolve([]);
-                    }
+    /**
+     * Package information
+     * @typedef FlatpakUpdatePackageInfo
+     * @prop {string} name
+     * @prop {string} latest
+     */
+    /**
+     * Used to fetch local package updates using checkupdates
+     * @returns {Promise<Array<FlatpakUpdatePackageInfo>>}
+     */
+    async fetchFlatpakUpdates() {
+        const stdout = await this.spawnv(['flatpak-spawn', '--host', 'bash', '-c', "flatpak remote-ls --updates"]).catch(this.handleError);
+        const lines = stdout.split('\n');
+        const updateList = [];
+        for (const line of lines) {
+            // regex to match the package name, current version, and latest version from platpak remote-ls --updates
+            // Name         Application ID              Version  Branch Installation
+            // org.kde.kdenlive org.kde.kdenlive           21.08.2  stable system
+            const match = line.match(/(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)/);
+            if (match) {
+                updateList.push({
+                    name: match[1],
+                    latest: match[3]
                 });
-            } catch (e) {
-                reject(e)
             }
-        });
+        }
+        return updateList;
     }
 
     /**
@@ -198,14 +166,14 @@ export const NyarchupdaterWindow = GObject.registerClass({
             this.setState("arch", "success");
         }
         if (flatpakUpdates.length) {
-            this.setState("flatpak", "updateAvailable", flatpakUpdates.map(update => `${update.name} ${update.current} -> ${update.latest}`).join('\n'));
+            this.setState("flatpak", "updateAvailable", flatpakUpdates.map(update => `${update.name} -> ${update.latest}`).join('\n'));
         } else {
             this.setState("flatpak", "success");
         }
     }
 
     /**
-     * Used to check for updates (both local and from the endpoint)
+     * Used to check for all updates
      * @returns {Promise<void>}
      */
     async checkForUpdates() {
@@ -218,13 +186,13 @@ export const NyarchupdaterWindow = GObject.registerClass({
         box.set_center_widget(loadingLabel);
         this._refresh_button.set_child(box);
         spinner.start();
-        const localUpdates = await this.fetchLocalUpdates();
-        const endpointUpdates = await this.fetchUpdatesEndpoint();
-        const flatpakUpdates = await this.fetchFlatpakUpdates();
+        const localUpdates = await this.fetchLocalUpdates().catch(this.handleError);
+        const endpointUpdates = await this.fetchUpdatesEndpoint().catch(this.handleError);
+        const flatpakUpdates = await this.fetchFlatpakUpdates().catch(this.handleError);
         this._refresh_button.set_sensitive(true);
         spinner.stop();
         box.set_center_widget(doneLabel);
-        this.updateWindow(localUpdates, endpointUpdates, flatpakUpdates).catch(console.error);
+        this.updateWindow(localUpdates, endpointUpdates, flatpakUpdates).catch(this.handleError);
     }
 
     /**
@@ -297,5 +265,53 @@ export const NyarchupdaterWindow = GObject.registerClass({
         this.setState("nyarch", "error", "An error occurred");
 
         logError(error);
+    }
+
+    spawnv(args) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let proc = this.launcher.spawnv(args);
+                proc.communicate_utf8_async(null, null, (proc, res) => {
+                    let [,stdout,] = proc.communicate_utf8_finish(res);
+                    if (proc.get_successful()) {
+                        resolve(stdout);
+                    } else {
+                        reject();
+                    }
+                });
+            } catch (e) {
+                reject(e)
+            }
+        });
+    }
+
+    fetch(url) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const session = Soup.Session.new();
+                let message = new Soup.Message({
+                    method: "GET",
+                    uri: GLib.uri_parse(url, GLib.UriFlags.NONE)
+                });
+                session.send_and_read_async(
+                    message,
+                    GLib.PRIORITY_DEFAULT,
+                    null,
+                    (session, result) => {
+                        if (message.get_status() === Soup.Status.OK) {
+                            let bytes = session.send_and_read_finish(result);
+                            let decoder = new TextDecoder('utf-8');
+                            const response = decoder.decode(bytes.get_data());
+                            const json = JSON.parse(response);
+                            resolve(json);
+                        } else {
+                            reject();
+                        }
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        })
     }
 });

@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="fix: merge errors, refactor">
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: FLatpak updates, use the new design">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +177,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728734185359</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="feat: FLatpak updates, use the new design">
+      <option name="closed" value="true" />
+      <created>1728736388406</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1728736388406</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -210,6 +217,7 @@
     <MESSAGE value="chore: idea files updates" />
     <MESSAGE value="chore: update README.md" />
     <MESSAGE value="fix: merge errors, refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: merge errors, refactor" />
+    <MESSAGE value="feat: FLatpak updates, use the new design" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: FLatpak updates, use the new design" />
   </component>
 </project>
