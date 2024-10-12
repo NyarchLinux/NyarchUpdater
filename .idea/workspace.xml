@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: make the update button work for arch updates">
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: proper error handling, arch updates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,7 +203,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728745651292</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="feat: proper error handling, arch updates">
+      <option name="closed" value="true" />
+      <created>1728749234538</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1728749234538</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,6 +246,7 @@
     <MESSAGE value="feat: FLatpak updates, use the new design" />
     <MESSAGE value="refractor: clean up the code, finish making the updates system work" />
     <MESSAGE value="feat: make the update button work for arch updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: make the update button work for arch updates" />
+    <MESSAGE value="feat: proper error handling, arch updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: proper error handling, arch updates" />
   </component>
 </project>

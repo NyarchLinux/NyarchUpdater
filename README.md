@@ -1,4 +1,5 @@
 # NyarchUpdater
+
 Nyarch Updater is a simple tool to update your Nyarch installation including:
 - Release updates
 - Packages updates
@@ -6,8 +7,11 @@ Nyarch Updater is a simple tool to update your Nyarch installation including:
 Through a simple yet beautiful interface.
 
 > Warning: This tool is only available for Nyarch Linux users. If you are not using Nyarch Linux, you can't use this tool.
->
-> Also the tool itself is not ready/developed yet. Don't try it for now.
+
+## Disclaimer
+
+Nyarch Updater is not ready yet. It's still in development. You can't use it yet.
+
 
 ## Installation
 
