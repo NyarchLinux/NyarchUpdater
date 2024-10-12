@@ -28,7 +28,20 @@ import Gtk from 'gi://Gtk?version=4.0';
 export const NyarchupdaterWindow = GObject.registerClass({
     GTypeName: 'NyarchupdaterWindow',
     Template: 'resource:///moe/nyarchlinux/updater/window.ui',
-    InternalChildren: ['updates_box', 'refresh_button', 'arch_label', 'arch_spinner', 'arch_success', 'arch_button'],
+    InternalChildren: [
+        'refresh_button',
+        'arch_label',
+        'arch_spinner',
+        'arch_success',
+        'arch_button',
+        'nyarch_spinner',
+        'nyarch_success',
+        'nyarch_button',
+        'flatpak_label',
+        'flatpak_spinner',
+        'flatpak_success',
+        'flatpak_button'
+    ],
 }, class NyarchupdaterWindow extends Adw.ApplicationWindow {
     constructor(application) {
         super({ application});
@@ -41,7 +54,6 @@ export const NyarchupdaterWindow = GObject.registerClass({
                 Gio.SubprocessFlags.STDERR_PIPE)
         });
         this.launcher.setenv("LANG", "C", true);
-        this._updates_box_childs = [];
         this.init();
     }
 
@@ -131,48 +143,64 @@ export const NyarchupdaterWindow = GObject.registerClass({
         });
     }
 
+    fetchFlatpakUpdates() {
+        // flatpak remote-ls --updates
+        return new Promise(async (resolve, reject) => {
+            try {
+                let proc = this.launcher.spawnv(['flatpak-spawn', '--host', 'bash', '-c', "flatpak remote-ls --updates"]);
+                proc.communicate_utf8_async(null, null, (proc, res) => {
+                    let [,stdout,] = proc.communicate_utf8_finish(res);
+                    if (proc.get_successful()) {
+                        const lines = stdout.split('\n');
+                        const updateList = [];
+                        for (const line of lines) {
+                            const match = line.match(/(\S+)\s(\S+)\s->\s(\S+)/); // regex to match the package name, current version, and latest version from "packagename current -> latest"
+                            if (match) {
+                                updateList.push({
+                                    name: match[1],
+                                    current: match[2],
+                                    latest: match[3]
+                                });
+                            }
+                        }
+                        resolve(updateList);
+                    } else {
+                        resolve([]);
+                    }
+                });
+            } catch (e) {
+                reject(e)
+            }
+        });
+    }
+
     /**
      * Update types
      * @typedef {"local"|"release"|"all"|string} UpdateType
      */
     /**
-     * Used to update the Updates Box in the window.
+     * Used to update the content of the window
      * @param {any[]} localUpdates
      * @param {any[]} endpointUpdates
+     * @param {any[]} flatpakUpdates
      * @returns {Promise<void>}
      */
-    async updateUpdatesBox(localUpdates, endpointUpdates) {
-        const updatesBox = this._updates_box;
-        if (this._updates_box_childs.length) this._updates_box_childs.forEach(child => updatesBox.remove(child));
+    async updateWindow(localUpdates, endpointUpdates, flatpakUpdates) {
         if (endpointUpdates) {
-            const releaseUpdateLabel = Gtk.Label.new(null);
-            releaseUpdateLabel.set_markup("<span line_height=\"2\" size=\"x-large\"><b>Release Updates</b></span>");
-            releaseUpdateLabel.set_halign(Gtk.Align.START);
-            this._updates_box_childs.push(releaseUpdateLabel);
-            updatesBox.append(releaseUpdateLabel);
-            const label = Gtk.Label.new(null);
-            label.set_markup(`<span color="#f9c89f"><b>New release available: <span font_weight="ultrabold">${endpointUpdates.version}</span></b></span>`);
-            label.set_halign(Gtk.Align.START);
-            updatesBox.append(label);
-            this._updates_box_childs.push(label);
+            this.setState("nyarch", "updateAvailable", `A new version of Nyarch Linux is available: ${endpointUpdates}`);
         } else {
-            const label = Gtk.Label.new(null);
-            label.set_markup("<span line_height=\"2\" size=\"x-large\"><b>You are up to date with the releases!</b></span>");
-            label.set_halign(Gtk.Align.START);
-            updatesBox.append(label);
-            this._updates_box_childs.push(label);
+            this.setState("nyarch", "success");
         }
-        if (!localUpdates.length) {
+        if (localUpdates.length) {
             // the count variable you putted in the for loop is not used, so I removed it, as count is literally the length of the array. As for the text, simply join() the array with a newline character
-            this._arch_label.set_label("No update needed");
-            this._arch_success.set_visible(true);
-            this._arch_spinner.set_visible(false);
-            this._arch_button.set_visible(false);
+            this.setState("arch", "updateAvailable", localUpdates.map(update => `${update.name} ${update.current} -> ${update.latest}`).join('\n'));
         } else {
-            this._arch_label.set_label(text);
-            this._arch_success.set_visible(false);
-            this._arch_spinner.set_visible(false);
-            this._arch_button.set_visible(true);
+            this.setState("arch", "success");
+        }
+        if (flatpakUpdates.length) {
+            this.setState("flatpak", "updateAvailable", flatpakUpdates.map(update => `${update.name} ${update.current} -> ${update.latest}`).join('\n'));
+        } else {
+            this.setState("flatpak", "success");
         }
     }
 
@@ -192,9 +220,82 @@ export const NyarchupdaterWindow = GObject.registerClass({
         spinner.start();
         const localUpdates = await this.fetchLocalUpdates();
         const endpointUpdates = await this.fetchUpdatesEndpoint();
+        const flatpakUpdates = await this.fetchFlatpakUpdates();
         this._refresh_button.set_sensitive(true);
         spinner.stop();
         box.set_center_widget(doneLabel);
-        this.updateUpdatesBox(localUpdates, endpointUpdates).catch(console.error);
+        this.updateWindow(localUpdates, endpointUpdates, flatpakUpdates).catch(console.error);
+    }
+
+    /**
+     * Resets all states of the window, to initialize it
+     */
+    init() {
+        this.setState("arch");
+        this.setState("flatpak");
+        this.setState("nyarch");
+    }
+
+    /**
+     * Element types
+     * @typedef {"loading"|"success"|"error"|"idle"|"updateAvailable"|string} StateType
+     */
+    /**
+     * Type of elements
+     * @typedef {"arch"|"flatpak"|"nyarch"|string} ElementType
+     */
+    /**
+     * Used to set the state of a specific type (Arch Updates, Flatpak Updates, Nyarch Updates)
+     * @param {ElementType} type The type of the element to set the state of
+     * @param {StateType} state The state to set the element to
+     * @param {string} [label] The content of the label
+     */
+    setState(type, state = "idle", label) {
+        switch(state) {
+            case "loading":
+                if (type !== "nyarch") this[`_${type}_label`].set_label(label || "Checking for updates...");
+                this[`_${type}_success`].set_visible(false);
+                this[`_${type}_spinner`].set_visible(true);
+                this[`_${type}_button`].set_visible(false);
+                break;
+            case "success":
+                if (type !== "nyarch")this[`_${type}_label`].set_label(label || "No update needed");
+                this[`_${type}_success`].set_visible(true);
+                this[`_${type}_spinner`].set_visible(false);
+                this[`_${type}_button`].set_visible(false);
+                break;
+            case "error":
+                if (type !== "nyarch")this[`_${type}_label`].set_label(label || "An error occurred");
+                this[`_${type}_success`].set_visible(false);
+                this[`_${type}_spinner`].set_visible(false);
+                this[`_${type}_button`].set_visible(false);
+                break;
+            case "idle":
+                if (type !== "nyarch")this[`_${type}_label`].set_label(label || "No update needed");
+                this[`_${type}_success`].set_visible(true);
+                this[`_${type}_spinner`].set_visible(false);
+                this[`_${type}_button`].set_visible(false);
+                break;
+            case "updateAvailable":
+                if (type !== "nyarch")this[`_${type}_label`].set_label(label || "Update available");
+                this[`_${type}_success`].set_visible(false);
+                this[`_${type}_spinner`].set_visible(false);
+                this[`_${type}_button`].set_visible(true);
+                break;
+            default:
+                if (type !== "nyarch")this[`_${type}_label`].set_label(label || "No update needed");
+                this[`_${type}_success`].set_visible(false);
+                this[`_${type}_spinner`].set_visible(false);
+                this[`_${type}_button`].set_visible(false);
+        }
+    }
+
+    handleError(error) {
+        console.error(error);
+        this.setState("arch", "error", "An error occurred");
+        this.setState("flatpak", "error", "An error occurred");
+        this.setState("nyarch", "error", "An error occurred");
+
+        logError(error);
     }
 });
