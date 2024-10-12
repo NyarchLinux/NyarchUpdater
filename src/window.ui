@@ -88,6 +88,17 @@
                             </style>
                           </object>
                         </child>
+                        <child type="suffix">
+                          <object class="GtkButton" id="arch_error">
+                            <property name="valign">center</property>
+                            <property name="icon-name">edit-delete-symbolic</property>
+                            <property name="visible">false</property>
+                            <style>
+                              <class name="flat" />
+                              <class name="error" />
+                            </style>
+                          </object>
+                        </child>
                         <child>
                           <object class="GtkScrolledWindow">
                             <property name="hexpand">true</property>
@@ -136,6 +147,17 @@
                             </style>
                           </object>
                         </child>
+                        <child type="suffix">
+                          <object class="GtkButton" id="flatpak_error">
+                            <property name="valign">center</property>
+                            <property name="icon-name">edit-delete-symbolic</property>
+                            <property name="visible">false</property>
+                            <style>
+                              <class name="flat" />
+                              <class name="error" />
+                            </style>
+                          </object>
+                        </child>
                         <child>
                           <object class="GtkScrolledWindow">
                             <property name="hexpand">true</property>
@@ -181,6 +203,17 @@
                             <style>
                               <class name="flat" />
                               <class name="success" />
+                            </style>
+                          </object>
+                        </child>
+                        <child type="suffix">
+                          <object class="GtkButton" id="nyarch_error">
+                            <property name="valign">center</property>
+                            <property name="icon-name">edit-delete-symbolic</property>
+                            <property name="visible">false</property>
+                            <style>
+                              <class name="flat" />
+                              <class name="error" />
                             </style>
                           </object>
                         </child>

@@ -34,13 +34,16 @@ export const NyarchupdaterWindow = GObject.registerClass({
         'arch_spinner',
         'arch_success',
         'arch_button',
+        'arch_error',
         'nyarch_spinner',
         'nyarch_success',
         'nyarch_button',
+        'nyarch_error',
         'flatpak_label',
         'flatpak_spinner',
         'flatpak_success',
-        'flatpak_button'
+        'flatpak_button',
+        'flatpak_error'
     ],
 }, class NyarchupdaterWindow extends Adw.ApplicationWindow {
     constructor(application) {
@@ -93,7 +96,10 @@ export const NyarchupdaterWindow = GObject.registerClass({
      * @returns {Promise<Array<ArchUpdatePackageInfo>>}
      */
     async fetchLocalUpdates() {
-        const stdout = await this.spawnv(['flatpak-spawn', '--host', 'bash', '-c', '/usr/bin/checkupdates']).catch(this.handleError);
+        const stdout = await this.spawnv(['flatpak-spawn', '--host', 'bash', '-c', '/usr/bin/checkupdates']);
+        if (!stdout) {
+            return [];
+        }
         const lines = stdout.split('\n');
         const updateList = [];
         for (const line of lines) {
@@ -121,7 +127,10 @@ export const NyarchupdaterWindow = GObject.registerClass({
      * @returns {Promise<Array<FlatpakUpdatePackageInfo>>}
      */
     async fetchFlatpakUpdates() {
-        const stdout = await this.spawnv(['flatpak-spawn', '--host', 'bash', '-c', "flatpak remote-ls --updates"]).catch(this.handleError);
+        const stdout = await this.spawnv(['flatpak-spawn', '--host', 'bash', '-c', "flatpak remote-ls --updates"]);
+        if (!stdout) {
+            return [];
+        }
         const lines = stdout.split('\n');
         const updateList = [];
         for (const line of lines) {
@@ -183,13 +192,22 @@ export const NyarchupdaterWindow = GObject.registerClass({
         box.set_center_widget(loadingLabel);
         this._refresh_button.set_child(box);
         spinner.start();
-        const localUpdates = await this.fetchLocalUpdates().catch(this.handleError);
-        const endpointUpdates = await this.fetchUpdatesEndpoint().catch(this.handleError);
-        const flatpakUpdates = await this.fetchFlatpakUpdates().catch(this.handleError);
+        const localUpdates = await this.fetchLocalUpdates().catch(err => {
+            this.resetButton(box, spinner);
+            throw err;
+        });
+        const endpointUpdates = await this.fetchUpdatesEndpoint().catch(err => {
+            this.resetButton(box, spinner);
+            throw err;
+        });
+        const flatpakUpdates = await this.fetchFlatpakUpdates().catch(err => {
+            this.resetButton(box, spinner);
+            throw err;
+        });
         this._refresh_button.set_sensitive(true);
         spinner.stop();
         box.set_center_widget(doneLabel);
-        this.updateWindow(localUpdates, endpointUpdates, flatpakUpdates).catch(this.handleError);
+        this.updateWindow(localUpdates, endpointUpdates, flatpakUpdates).catch(this.handleError.bind(this));
     }
 
     /**
@@ -201,12 +219,19 @@ export const NyarchupdaterWindow = GObject.registerClass({
         this.setState("nyarch");
 
         this._refresh_button.connect("clicked", async () => {
-            await this.checkForUpdates().catch(console.error);
+            await this.checkForUpdates().catch(this.handleError.bind(this));
         });
         this._arch_button.connect("clicked", async () => {
-            await this.updateArch().catch(console.error);
+            await this.updateArch().catch(this.handleError.bind(this));
         });
-        this.checkForUpdates().catch(console.error);
+        this.checkForUpdates().catch(this.handleError.bind(this));
+    }
+
+    resetButton(box, spinner) {
+        const doneLabel = Gtk.Label.new("Check for updates");
+        this._refresh_button.set_sensitive(true);
+        spinner.stop();
+        box.set_center_widget(doneLabel);
     }
 
     /**
@@ -230,44 +255,51 @@ export const NyarchupdaterWindow = GObject.registerClass({
                 this[`_${type}_success`].set_visible(false);
                 this[`_${type}_spinner`].set_visible(true);
                 this[`_${type}_button`].set_visible(false);
+                this[`_${type}_error`].set_visible(false);
                 break;
             case "success":
                 if (type !== "nyarch")this[`_${type}_label`].set_label(label || "No update needed");
                 this[`_${type}_success`].set_visible(true);
                 this[`_${type}_spinner`].set_visible(false);
                 this[`_${type}_button`].set_visible(false);
+                this[`_${type}_error`].set_visible(false);
                 break;
             case "error":
                 if (type !== "nyarch")this[`_${type}_label`].set_label(label || "An error occurred");
                 this[`_${type}_success`].set_visible(false);
                 this[`_${type}_spinner`].set_visible(false);
                 this[`_${type}_button`].set_visible(false);
+                this[`_${type}_error`].set_visible(true);
                 break;
             case "idle":
                 if (type !== "nyarch")this[`_${type}_label`].set_label(label || "No update needed");
                 this[`_${type}_success`].set_visible(true);
                 this[`_${type}_spinner`].set_visible(false);
                 this[`_${type}_button`].set_visible(false);
+                this[`_${type}_error`].set_visible(false);
                 break;
             case "updateAvailable":
                 if (type !== "nyarch")this[`_${type}_label`].set_label(label || "Update available");
                 this[`_${type}_success`].set_visible(false);
                 this[`_${type}_spinner`].set_visible(false);
                 this[`_${type}_button`].set_visible(true);
+                this[`_${type}_error`].set_visible(false);
                 break;
             default:
                 if (type !== "nyarch")this[`_${type}_label`].set_label(label || "No update needed");
                 this[`_${type}_success`].set_visible(false);
                 this[`_${type}_spinner`].set_visible(false);
                 this[`_${type}_button`].set_visible(false);
+                this[`_${type}_error`].set_visible(false);
         }
     }
 
     handleError(error) {
-        console.error(error);
         this.setState("arch", "error", "An error occurred");
         this.setState("flatpak", "error", "An error occurred");
         this.setState("nyarch", "error", "An error occurred");
+
+        this.createDialog("An error occurred", `Oopsie, an error occured during the update check! \nError message: ${error.message}`);
 
         logError(error);
     }
@@ -281,7 +313,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
                     if (proc.get_successful()) {
                         resolve(stdout);
                     } else {
-                        reject();
+                        resolve(null);
                     }
                 });
             } catch (e) {
@@ -322,6 +354,18 @@ export const NyarchupdaterWindow = GObject.registerClass({
 
     async updateArch() {
         // gnome-terminal -- /bin/sh -c \"sudo pacman -Syu ; echo Done - Press enter to exit; read _\" command
-        await this.launcher.spawnv(['flatpak-spawn', '--host bash', '-c', '\"gnome-terminal -- /bin/sh -c sudo pacman -Syu ; echo Done - Press enter to exit; read _ \"']);
+        await this.launcher.spawnv(['flatpak-spawn', '--host', 'gnome-terminal', '--', 'bash', '-c', "sudo pacman -Syu ; echo Done - Press enter to exit; read _"]);
+    }
+
+    createDialog(title, message) {
+        const dialog = Adw.AlertDialog.new(title, null);
+        dialog.set_body(message);
+        dialog.add_response("close", "_Close");
+        dialog.set_default_response("close");
+        dialog.set_close_response("close");
+        dialog.connect("response", () => {
+            dialog.close();
+        });
+        dialog.present(dialog);
     }
 });
