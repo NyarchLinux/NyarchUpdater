@@ -25,6 +25,8 @@ import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
 
+import { PresentationWindow } from './presentation.js';
+
 export const NyarchupdaterWindow = GObject.registerClass({
     GTypeName: 'NyarchupdaterWindow',
     Template: 'resource:///moe/nyarchlinux/updater/window.ui',
@@ -227,6 +229,9 @@ export const NyarchupdaterWindow = GObject.registerClass({
         this._flatpak_button.connect("clicked", async () => {
             await this.updateFlatpak().catch(this.handleError.bind(this));
         });
+        this._nyarch_button.connect("clicked", async () => {
+            await this.updateNyarch().catch(this.handleError.bind(this));
+        });
         this.checkForUpdates().catch(this.handleError.bind(this));
     }
 
@@ -362,6 +367,12 @@ export const NyarchupdaterWindow = GObject.registerClass({
 
     async updateFlatpak() {
         await this.launcher.spawnv(['flatpak-spawn', '--host', 'gnome-terminal', '--', 'bash', '-c', "sudo flatpak update ; echo Done - Press enter to exit; read _"]);
+    }
+
+    async updateNyarch() {
+        if (!this.window) this.window = new PresentationWindow(this.get_application(), this);
+        const window = this.window;
+        window.present();
     }
 
     createDialog(title, message) {
