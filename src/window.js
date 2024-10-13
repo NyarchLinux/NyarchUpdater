@@ -224,6 +224,9 @@ export const NyarchupdaterWindow = GObject.registerClass({
         this._arch_button.connect("clicked", async () => {
             await this.updateArch().catch(this.handleError.bind(this));
         });
+        this._flatpak_button.connect("clicked", async () => {
+            await this.updateFlatpak().catch(this.handleError.bind(this));
+        });
         this.checkForUpdates().catch(this.handleError.bind(this));
     }
 
