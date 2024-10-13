@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: add flatpak updates">
-      <change afterPath="$PROJECT_DIR$/src/carousel_page.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/presentation.ui" afterDir="false" />
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: add dummy nyarch release updates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.data.gresource.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.data.gresource.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.src.gresource.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.src.gresource.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/nyarchupdater.data.gresource.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/nyarchupdater.data.gresource.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +91,7 @@
       <workItem from="1728481423743" duration="1893000" />
       <workItem from="1728483331006" duration="4896000" />
       <workItem from="1728489055785" duration="974000" />
-      <workItem from="1728814663412" duration="4715000" />
+      <workItem from="1728814663412" duration="6108000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -236,7 +229,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728815143669</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="feat: add dummy nyarch release updates">
+      <option name="closed" value="true" />
+      <created>1728819632194</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1728819632194</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,6 +274,7 @@
     <MESSAGE value="feat: make the update button work for arch updates" />
     <MESSAGE value="feat: proper error handling, arch updates" />
     <MESSAGE value="feat: add flatpak updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add flatpak updates" />
+    <MESSAGE value="feat: add dummy nyarch release updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add dummy nyarch release updates" />
   </component>
 </project>
