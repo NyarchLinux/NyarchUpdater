@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="fix: icons">
-      <change afterPath="$PROJECT_DIR$/install.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/icons/hicolor/scalable/apps/moe.nyarchlinux.updater.svg" beforeDir="false" afterPath="$PROJECT_DIR$/data/icons/hicolor/scalable/apps/moe.nyarchlinux.updater.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/icons/hicolor/symbolic/apps/moe.nyarchlinux.updater-symbolic.svg" beforeDir="false" afterPath="$PROJECT_DIR$/data/icons/hicolor/symbolic/apps/moe.nyarchlinux.updater-symbolic.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/icons/meson.build" beforeDir="false" afterPath="$PROJECT_DIR$/data/icons/meson.build" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/presentation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/presentation.js" afterDir="false" />
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: add nyarch release updates">
+      <change beforePath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.src.gresource.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.src.gresource.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +92,7 @@
       <workItem from="1728481423743" duration="1893000" />
       <workItem from="1728483331006" duration="4896000" />
       <workItem from="1728489055785" duration="974000" />
-      <workItem from="1728814663412" duration="8444000" />
+      <workItem from="1728814663412" duration="8755000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -250,7 +246,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728824398109</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="feat: add nyarch release updates">
+      <option name="closed" value="true" />
+      <created>1728826935444</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1728826935444</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -289,6 +293,7 @@
     <MESSAGE value="feat: add flatpak updates" />
     <MESSAGE value="feat: add dummy nyarch release updates" />
     <MESSAGE value="fix: icons" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: icons" />
+    <MESSAGE value="feat: add nyarch release updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add nyarch release updates" />
   </component>
 </project>
