@@ -77,6 +77,7 @@ export const PresentationWindow = GObject.registerClass({
         const buttons = builder.get_object('buttonsBox');
 
         for (const buttonData of page.buttons) {
+            if (!buttonData) continue;
             const button = Gtk.Button.new();
             if (buttonData.style) button.set_css_classes([buttonData.style]);
             if (buttonData.icon) {
@@ -89,6 +90,7 @@ export const PresentationWindow = GObject.registerClass({
                 button.set_label(buttonData.label);
             }
             this.commands[button] = buttonData.command;
+            button.set_sensitive(!buttonData.disabled);
             button.connect('clicked', this.onButtonClick.bind(this));
             buttons.append(button);
         }
@@ -102,17 +104,18 @@ export const PresentationWindow = GObject.registerClass({
     onButtonClick(button) {
         if (this.commands[button] === 'skip') {
             this.next();
-            return;
-        }
-        if (this.commands[button] === 'all') {
-            for (const command of Object.values(this.commands)) {
-                if (command === 'skip' || command === 'all') continue;
-                // TODO check if multiple command taking long times runs in parallel, if son, run them in sequence
-                this.mainWindow.spawnv(['flatpak-spawn', '--host', 'bash', '-c', 'pkexec', command]);
+        } else {
+            button.set_sensitive(false);
+            if (this.commands[button] === 'all') {
+                for (const command of Object.values(this.commands)) {
+                    if (command === 'skip' || command === 'all') continue;
+                    // TODO check if multiple command taking long times runs in parallel, if son, run them in sequence
+                    this.mainWindow.spawnv(['flatpak-spawn', '--host', 'bash', '-c', 'pkexec', command]).catch(this.mainWindow.handleError.bind(this.mainWindow));
+                }
+                return;
             }
-            return;
+            this.mainWindow.spawnv(['flatpak-spawn', '--host', 'bash', '-c', 'pkexec', this.commands[button]]).catch(this.mainWindow.handleError.bind(this.mainWindow));
         }
-        this.mainWindow.spawnv(['flatpak-spawn', '--host', 'bash', '-c', 'pkexec', this.commands[button]]);
     }
 
     formatPages(fetchUpdatesResult) {
@@ -128,7 +131,8 @@ export const PresentationWindow = GObject.registerClass({
                     {
                         label: 'Skip',
                         style: 'destructive-action',
-                        command: 'skip'
+                        command: 'skip',
+                        disabled: !update.skippable
                     },
                     {
                         label: 'Execute',
