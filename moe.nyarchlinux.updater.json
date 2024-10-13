@@ -1,12 +1,8 @@
 {
     "id" : "moe.nyarchlinux.updater",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "46",
+    "runtime-version" : "47",
     "sdk" : "org.gnome.Sdk",
-    "sdk-extensions" : [
-        "org.freedesktop.Sdk.Extension.node18",
-        "org.freedesktop.Sdk.Extension.typescript"
-    ],
     "command" : "moe.nyarchlinux.updater",
     "finish-args" : [
         "--share=network",
@@ -14,7 +10,8 @@
         "--socket=fallback-x11",
         "--device=dri",
         "--socket=wayland",
-        "--talk-name=org.freedesktop.Flatpak"
+        "--talk-name=org.freedesktop.Flatpak",
+        "--filesystem=host"
     ],
     "build-options" : {
         "append-path" : "/usr/lib/sdk/typescript/bin:/usr/lib/sdk/node18/bin"
