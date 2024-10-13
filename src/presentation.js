@@ -22,8 +22,6 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk?version=4.0';
 
-import pages from './pages.js';
-
 export const PresentationWindow = GObject.registerClass({
     GTypeName: 'PresentationWindow',
     Template: 'resource:///moe/nyarchlinux/updater/presentation.ui',
@@ -42,13 +40,17 @@ export const PresentationWindow = GObject.registerClass({
     }
 
     async init() {
-        for (const page of pages) {
+        this.pages = this.formatPages(await this.mainWindow.fetchUpdatesEndpoint().catch(this.mainWindow.handleError.bind(this.mainWindow)));
+
+        for (const page of this.pages) {
             this._carousel.append(await this.generatePage(page));
         }
 
         this._next.connect('clicked', this.next.bind(this));
         this._previous.connect('clicked', this.previous.bind(this));
         this._carousel.connect('page-changed', this.onPageChanged.bind(this));
+
+        this.onPageChanged(this._carousel, 0);
     }
 
     next() {
@@ -98,6 +100,48 @@ export const PresentationWindow = GObject.registerClass({
     }
 
     onButtonClick(button) {
+        if (this.commands[button] === 'skip') {
+            this.next();
+            return;
+        }
+        if (this.commands[button] === 'all') {
+            for (const command of Object.values(this.commands)) {
+                if (command === 'skip' || command === 'all') continue;
+                // TODO check if multiple command taking long times runs in parallel, if son, run them in sequence
+                this.mainWindow.spawnv(['flatpak-spawn', '--host', 'bash', '-c', 'pkexec', command]);
+            }
+            return;
+        }
         this.mainWindow.spawnv(['flatpak-spawn', '--host', 'bash', '-c', 'pkexec', this.commands[button]]);
+    }
+
+    formatPages(fetchUpdatesResult) {
+        const updates = fetchUpdatesResult.updates;
+
+        return updates.map(update => {
+            const index = updates.indexOf(update);
+
+            return {
+                title: update.title,
+                body: update.description,
+                buttons: [
+                    {
+                        label: 'Skip',
+                        style: 'destructive-action',
+                        command: 'skip'
+                    },
+                    {
+                        label: 'Execute',
+                        style: 'suggested-action',
+                        command: update.command
+                    },
+                    index === 0 ? {
+                        label: 'Execute All',
+                        style: 'execute',
+                        command: "all"
+                    } : undefined
+                ]
+            };
+        });
     }
 });

@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: add dummy nyarch release updates">
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="fix: icons">
+      <change afterPath="$PROJECT_DIR$/install.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/icons/hicolor/scalable/apps/moe.nyarchlinux.updater.svg" beforeDir="false" afterPath="$PROJECT_DIR$/data/icons/hicolor/scalable/apps/moe.nyarchlinux.updater.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/icons/hicolor/symbolic/apps/moe.nyarchlinux.updater-symbolic.svg" beforeDir="false" afterPath="$PROJECT_DIR$/data/icons/hicolor/symbolic/apps/moe.nyarchlinux.updater-symbolic.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/icons/meson.build" beforeDir="false" afterPath="$PROJECT_DIR$/data/icons/meson.build" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/presentation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/presentation.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +96,7 @@
       <workItem from="1728481423743" duration="1893000" />
       <workItem from="1728483331006" duration="4896000" />
       <workItem from="1728489055785" duration="974000" />
-      <workItem from="1728814663412" duration="6108000" />
+      <workItem from="1728814663412" duration="8444000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -237,7 +242,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728819632194</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="fix: icons">
+      <option name="closed" value="true" />
+      <created>1728824398109</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1728824398109</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,6 +288,7 @@
     <MESSAGE value="feat: proper error handling, arch updates" />
     <MESSAGE value="feat: add flatpak updates" />
     <MESSAGE value="feat: add dummy nyarch release updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add dummy nyarch release updates" />
+    <MESSAGE value="fix: icons" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: icons" />
   </component>
 </project>
