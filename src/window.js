@@ -357,6 +357,10 @@ export const NyarchupdaterWindow = GObject.registerClass({
         await this.launcher.spawnv(['flatpak-spawn', '--host', 'gnome-terminal', '--', 'bash', '-c', "sudo pacman -Syu ; echo Done - Press enter to exit; read _"]);
     }
 
+    async updateFlatpak() {
+        await this.launcher.spawnv(['flatpak-spawn', '--host', 'gnome-terminal', '--', 'bash', '-c', "sudo flatpak update ; echo Done - Press enter to exit; read _"]);
+    }
+
     createDialog(title, message) {
         const dialog = Adw.AlertDialog.new(title, null);
         dialog.set_body(message);
