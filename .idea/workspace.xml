@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="refractor: remove unused pages.js">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="fix: some issues with the command execution, add an install script">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/install.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/moe.nyarchlinux.updater.json" beforeDir="false" afterPath="$PROJECT_DIR$/moe.nyarchlinux.updater.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/presentation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/presentation.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +59,7 @@
     "Node.js.window.js.executor": "Run",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/adam/Documents/dev/website",
+    "last_opened_file_path": "/run/media/adam/Données/Utilisateurs/Adam/Documents/dev/TypeScript/Bots/gamearoodev",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -95,7 +91,9 @@
       <workItem from="1728481423743" duration="1893000" />
       <workItem from="1728483331006" duration="4896000" />
       <workItem from="1728489055785" duration="974000" />
-      <workItem from="1728814663412" duration="10166000" />
+      <workItem from="1728814663412" duration="10496000" />
+      <workItem from="1729070509852" duration="2000" />
+      <workItem from="1729074432123" duration="72000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -265,7 +263,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728826990982</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="fix: some issues with the command execution, add an install script">
+      <option name="closed" value="true" />
+      <created>1728828697717</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1728828697717</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -306,6 +312,7 @@
     <MESSAGE value="fix: icons" />
     <MESSAGE value="feat: add nyarch release updates" />
     <MESSAGE value="refractor: remove unused pages.js" />
-    <option name="LAST_COMMIT_MESSAGE" value="refractor: remove unused pages.js" />
+    <MESSAGE value="fix: some issues with the command execution, add an install script" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: some issues with the command execution, add an install script" />
   </component>
 </project>

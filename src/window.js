@@ -72,9 +72,8 @@ export const NyarchupdaterWindow = GObject.registerClass({
                     reject("Could not read /version file");
                     return;
                 }
-                const currentVersion = new TextDecoder().decode(current).trim().match(/.{1,2}/g);
-                currentVersion.pop();
-                const newer = json[currentVersion.join('.')];
+                const currentVersion = new TextDecoder().decode(current).trim();
+                const newer = json[currentVersion];
                 if (!newer) {
                     resolve(null);
                 } else {
