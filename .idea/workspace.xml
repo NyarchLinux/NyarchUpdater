@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="fix: version format" />
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="fix: error while opening presentation window&#10;&#10;JS ERROR: Error: Argument to the constructor of PresentationWindow should be a plain JS object with properties to set&#10;_init/Gtk.Widget.prototype._init@resource:///org/gnome/gjs/modules/core/overrides/Gtk.js:39:56&#10;PresentationWindow@resource:///moe/nyarchlinux/updater/js/presentation.js:35:9&#10;updateNyarch@resource:///moe/nyarchlinux/updater/js/window.js:372:41&#10;init/&lt;@resource:///moe/nyarchlinux/updater/js/window.js:232:24&#10;_init/GLib.MainLoop.prototype.runAsync/&lt;/&lt;@resource:///org/gnome/gjs/modules/core/overrides/GLib.js:263:34">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/carousel_page.ui" beforeDir="false" afterPath="$PROJECT_DIR$/src/carousel_page.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/presentation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/presentation.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -93,6 +97,8 @@
       <workItem from="1729070509852" duration="2000" />
       <workItem from="1729074432123" duration="72000" />
       <workItem from="1729170768415" duration="1034000" />
+      <workItem from="1729171884986" duration="338000" />
+      <workItem from="1729172433626" duration="686000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -278,7 +284,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729171687058</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="fix: error while opening presentation window&#10;&#10;JS ERROR: Error: Argument to the constructor of PresentationWindow should be a plain JS object with properties to set&#10;_init/Gtk.Widget.prototype._init@resource:///org/gnome/gjs/modules/core/overrides/Gtk.js:39:56&#10;PresentationWindow@resource:///moe/nyarchlinux/updater/js/presentation.js:35:9&#10;updateNyarch@resource:///moe/nyarchlinux/updater/js/window.js:372:41&#10;init/&lt;@resource:///moe/nyarchlinux/updater/js/window.js:232:24&#10;_init/GLib.MainLoop.prototype.runAsync/&lt;/&lt;@resource:///org/gnome/gjs/modules/core/overrides/GLib.js:263:34">
+      <option name="closed" value="true" />
+      <created>1729172189489</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1729172189489</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -321,6 +335,7 @@
     <MESSAGE value="refractor: remove unused pages.js" />
     <MESSAGE value="fix: some issues with the command execution, add an install script" />
     <MESSAGE value="fix: version format" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: version format" />
+    <MESSAGE value="fix: error while opening presentation window&#10;&#10;JS ERROR: Error: Argument to the constructor of PresentationWindow should be a plain JS object with properties to set&#10;_init/Gtk.Widget.prototype._init@resource:///org/gnome/gjs/modules/core/overrides/Gtk.js:39:56&#10;PresentationWindow@resource:///moe/nyarchlinux/updater/js/presentation.js:35:9&#10;updateNyarch@resource:///moe/nyarchlinux/updater/js/window.js:372:41&#10;init/&lt;@resource:///moe/nyarchlinux/updater/js/window.js:232:24&#10;_init/GLib.MainLoop.prototype.runAsync/&lt;/&lt;@resource:///org/gnome/gjs/modules/core/overrides/GLib.js:263:34" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: error while opening presentation window&#10;&#10;JS ERROR: Error: Argument to the constructor of PresentationWindow should be a plain JS object with properties to set&#10;_init/Gtk.Widget.prototype._init@resource:///org/gnome/gjs/modules/core/overrides/Gtk.js:39:56&#10;PresentationWindow@resource:///moe/nyarchlinux/updater/js/presentation.js:35:9&#10;updateNyarch@resource:///moe/nyarchlinux/updater/js/window.js:372:41&#10;init/&lt;@resource:///moe/nyarchlinux/updater/js/window.js:232:24&#10;_init/GLib.MainLoop.prototype.runAsync/&lt;/&lt;@resource:///org/gnome/gjs/modules/core/overrides/GLib.js:263:34" />
   </component>
 </project>

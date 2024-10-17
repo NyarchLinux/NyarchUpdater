@@ -101,11 +101,26 @@ export const PresentationWindow = GObject.registerClass({
     }
 
     onButtonClick(button) {
-        if (this.commands[button] === 'skip') {
+        const command = this.commands[button];
+        if (command === 'skip') {
             this.next();
+        } else if (command.startsWith('showCommand')) {
+            // show a new window with the command and a close button
+            const dialog = new Gtk.Dialog({transient_for: this, modal: true});
+            dialog.set_title('Command');
+            dialog.set_default_size(800, 600);
+            const content = new Gtk.TextView();
+            content.set_editable(false);
+            content.set_monospace(true);
+            content.get_buffer().set_text(command.replace("showCommand ", ""), command.replace("showCommand ", "").length);
+            dialog.set_child(content);
+            const closeButton = new Gtk.Button({label: 'Close'});
+            closeButton.connect('clicked', () => dialog.close());
+            dialog.add_action_widget(closeButton, Gtk.ResponseType.CLOSE);
+            dialog.show();
         } else {
             button.set_sensitive(false);
-            if (this.commands[button] === 'all') {
+            if (command === 'all') {
                 for (const command of Object.values(this.commands)) {
                     if (command === 'skip' || command === 'all') continue;
                     // TODO check if multiple command taking long times runs in parallel, if son, run them in sequence
@@ -113,7 +128,7 @@ export const PresentationWindow = GObject.registerClass({
                 }
                 return;
             }
-            this.mainWindow.spawnv(['flatpak-spawn', '--host', 'bash', '-c', 'pkexec', this.commands[button]]).catch(this.mainWindow.handleError.bind(this.mainWindow));
+            this.mainWindow.spawnv(['flatpak-spawn', '--host', 'bash', '-c', 'pkexec', command]).catch(this.mainWindow.handleError.bind(this.mainWindow));
         }
     }
 
@@ -137,6 +152,11 @@ export const PresentationWindow = GObject.registerClass({
                         label: 'Execute',
                         style: 'suggested-action',
                         command: update.command
+                    },
+                    {
+                        label: 'Show Command',
+                        style: '',
+                        command: 'showCommand ' + update.shown_command
                     },
                     index === 0 ? {
                         label: 'Execute All',
