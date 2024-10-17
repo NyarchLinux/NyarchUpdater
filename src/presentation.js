@@ -173,6 +173,7 @@ export const PresentationWindow = GObject.registerClass({
             return {
                 title: update.title,
                 body: update.description,
+                image: update.image,
                 buttons: [
                     {
                         label: 'Skip',
