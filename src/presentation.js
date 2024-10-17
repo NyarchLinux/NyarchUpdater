@@ -32,8 +32,7 @@ export const PresentationWindow = GObject.registerClass({
     ],
 }, class PresentationWindow extends Adw.ApplicationWindow {
     constructor(application, mainWindow) {
-        super(application)
-        this.app = application;
+        super({ application });
         this.commands = {};
         this.mainWindow = mainWindow;
         this.init().catch(this.mainWindow.handleError.bind(this.mainWindow));

@@ -57,6 +57,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
         });
         this.launcher.setenv("LANG", "C", true);
         this.init();
+        this.application = application;
     }
 
     /**
@@ -369,7 +370,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
     }
 
     async updateNyarch() {
-        if (!this.window) this.window = new PresentationWindow(this.get_application(), this);
+        if (!this.window) this.window = new PresentationWindow(this.application, this);
         const window = this.window;
         window.present();
     }
