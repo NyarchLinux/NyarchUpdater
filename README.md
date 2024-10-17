@@ -25,9 +25,22 @@ You can install Nyarch Updater via Flatpak. It should be pre-installed from Nyar
 
 ### Manual
 
-SOON
+You will need flatpak-builder to build Nyarch Updater. You can install it by running the following command:
 
-<!-- TODO write the packaging and installation through pkg. -->
+```bash
+sudo pacman -S flatpak-builder
+```
+
+Then, you can build Nyarch Updater by running the following commands:
+
+```bash
+git clone https://github.com/NyarchLinux/NyarchUpdater.git
+cd NyarchUpdater
+chmod +x install.sh
+sudo ./install.sh
+```
+
+Nyarch Updater should now be installed on your system.
 
 ### Development
 
