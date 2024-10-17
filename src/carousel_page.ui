@@ -9,7 +9,7 @@
         <property name="orientation">GTK_ORIENTATION_VERTICAL</property>
         <property name="valign">GTK_ALIGN_CENTER</property>
         <child>
-            <object class="GtkImage" id="image">
+            <object class="GtkPicture" id="image">
                 <property name="visible">false</property>
             </object>
         </child>

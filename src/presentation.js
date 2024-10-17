@@ -122,7 +122,7 @@ export const PresentationWindow = GObject.registerClass({
             const loader = new GtkPixbuf.PixbufLoader(response);
             loader.write_bytes(response);
             loader.close();
-            image.set_from_pixbuf(loader.get_pixbuf());
+            image.set_pixbuf(loader.get_pixbuf());
             image.set_visible(true);
         }
 
