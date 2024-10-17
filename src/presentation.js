@@ -123,6 +123,7 @@ export const PresentationWindow = GObject.registerClass({
             loader.write_bytes(response);
             loader.close();
             image.set_from_pixbuf(loader.get_pixbuf());
+            image.set_visible(true);
         }
 
         title.set_label(page.title);

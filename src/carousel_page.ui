@@ -10,7 +10,7 @@
         <property name="valign">GTK_ALIGN_CENTER</property>
         <child>
             <object class="GtkImage" id="image">
-                <property name="opacity">0</property>
+                <property name="visible">false</property>
             </object>
         </child>
         <child>
