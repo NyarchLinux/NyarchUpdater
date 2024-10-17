@@ -21,6 +21,7 @@
 import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk?version=4.0';
+import GtkPixbuf from 'gi://GdkPixbuf';
 
 export const PresentationWindow = GObject.registerClass({
     GTypeName: 'PresentationWindow',
@@ -39,7 +40,28 @@ export const PresentationWindow = GObject.registerClass({
     }
 
     async init() {
-        this.pages = this.formatPages(await this.mainWindow.fetchUpdatesEndpoint().catch(this.mainWindow.handleError.bind(this.mainWindow)));
+        const update = await this.mainWindow.fetchUpdatesEndpoint().catch(this.mainWindow.handleError.bind(this.mainWindow));
+        const firstSlide = {
+            image: update.logo,
+            title: `Nyarch Linux ${update.version}: ${update.codename}`,
+            body: "",
+            buttons: [
+                {
+                    label: "Release Notes",
+                    style: "",
+                    command: "xdg-open " + update.release_notes,
+                    disabled: false
+                },
+                {
+                    label: "Next",
+                    style: "suggested-action",
+                    command: "skip",
+                    disabled: false
+                }
+            ]
+        };
+        this.pages = [firstSlide];
+        this.pages.push(...this.formatPages(update));
 
         for (const page of this.pages) {
             this._carousel.append(await this.generatePage(page));
@@ -74,6 +96,7 @@ export const PresentationWindow = GObject.registerClass({
         const body = builder.get_object('body');
         const title = builder.get_object('title');
         const buttons = builder.get_object('buttonsBox');
+        const image = builder.get_object('image');
 
         for (const buttonData of page.buttons) {
             if (!buttonData) continue;
@@ -92,6 +115,14 @@ export const PresentationWindow = GObject.registerClass({
             button.set_sensitive(!buttonData.disabled);
             button.connect('clicked', this.onButtonClick.bind(this));
             buttons.append(button);
+        }
+
+        if (page.image) {
+            const response = await this.mainWindow.fetchBytes(page.image);
+            const loader = new GtkPixbuf.PixbufLoader(response);
+            loader.write_bytes(response);
+            loader.close();
+            image.set_from_pixbuf(loader.get_pixbuf());
         }
 
         title.set_label(page.title);

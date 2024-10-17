@@ -330,7 +330,14 @@ export const NyarchupdaterWindow = GObject.registerClass({
         });
     }
 
-    fetch(url) {
+    async fetch(url) {
+        const response = await this.fetchBytes(url);
+        const decoder = new TextDecoder("utf-8");
+        const decoded = decoder.decode(response);
+        return JSON.parse(decoded);
+    }
+
+    fetchBytes(url) {
         return new Promise(async (resolve, reject) => {
             try {
                 const session = Soup.Session.new();
@@ -345,10 +352,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
                     (session, result) => {
                         if (message.get_status() === Soup.Status.OK) {
                             let bytes = session.send_and_read_finish(result);
-                            let decoder = new TextDecoder('utf-8');
-                            const response = decoder.decode(bytes.get_data());
-                            const json = JSON.parse(response);
-                            resolve(json);
+                            resolve(bytes);
                         } else {
                             reject();
                         }
@@ -357,7 +361,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
             } catch (err) {
                 reject(err);
             }
-        })
+        });
     }
 
     async updateArch() {

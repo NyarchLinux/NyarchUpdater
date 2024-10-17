@@ -9,6 +9,11 @@
         <property name="orientation">GTK_ORIENTATION_VERTICAL</property>
         <property name="valign">GTK_ALIGN_CENTER</property>
         <child>
+            <object class="GtkImage" id="image">
+                <property name="opacity">0</property>
+            </object>
+        </child>
+        <child>
             <object class="GtkLabel" id="title">
                 <property name="valign">GTK_ALIGN_CENTER</property>
                 <property name="css-classes">title-1</property>
