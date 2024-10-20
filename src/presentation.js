@@ -65,8 +65,21 @@ export const PresentationWindow = GObject.registerClass({
                 }
             ]
         };
+        const lastSlide = {
+            icon: "check-round-outline-symbolic",
+            iconclass: "success",
+            title: `Done!`,
+            body: "Nyarch has been updated. You can now enjoy the new release!",
+            buttons: [
+              {
+                    label: 'Close Window',
+                    style: 'suggested-action',
+                    command: "closewindow"
+              }]
+        };
         this.pages = [firstSlide];
         this.pages.push(...this.formatPages(update));
+        this.pages.push(lastSlide);
 
         for (const page of this.pages) {
             this._carousel.append(await this.generatePage(page));
@@ -102,6 +115,7 @@ export const PresentationWindow = GObject.registerClass({
         const title = builder.get_object('title');
         const buttons = builder.get_object('buttonsBox');
         const image = builder.get_object('image');
+        const icon = builder.get_object('icon');
 
         for (const buttonData of page.buttons) {
             if (!buttonData) continue;
@@ -130,6 +144,14 @@ export const PresentationWindow = GObject.registerClass({
             image.set_pixbuf(loader.get_pixbuf());
             image.set_visible(true);
         }
+        if (page.icon) {
+            icon.set_from_icon_name(page.icon);
+            icon.set_pixel_size(200);
+            icon.set_visible(true);
+            if (page.iconclass) {
+              icon.add_css_class(page.iconclass);
+            }
+        }
 
         title.set_label(page.title);
         body.set_label(page.body);
@@ -156,6 +178,8 @@ export const PresentationWindow = GObject.registerClass({
             closeButton.connect('clicked', () => dialog.close());
             dialog.add_action_widget(closeButton, Gtk.ResponseType.CLOSE);
             dialog.show();
+        } else if (command == "closewindow") {
+            this.destroy()
         } else {
             button.set_sensitive(false);
             if (command === 'all') {
