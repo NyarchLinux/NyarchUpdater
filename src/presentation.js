@@ -57,6 +57,11 @@ export const PresentationWindow = GObject.registerClass({
                     style: "suggested-action",
                     command: "skip",
                     disabled: false
+                },
+                {
+                    label: 'Execute All',
+                    style: 'execute',
+                    command: "all"
                 }
             ]
         };
@@ -134,6 +139,7 @@ export const PresentationWindow = GObject.registerClass({
 
     onButtonClick(button) {
         const command = this.commands[button];
+        log(command)
         if (command === 'skip') {
             this.next();
         } else if (command.startsWith('showCommand')) {
@@ -153,14 +159,17 @@ export const PresentationWindow = GObject.registerClass({
         } else {
             button.set_sensitive(false);
             if (command === 'all') {
+                var full_command = "";
                 for (const command of Object.values(this.commands)) {
                     if (command === 'skip' || command === 'all') continue;
                     // TODO check if multiple command taking long times runs in parallel, if son, run them in sequence
-                    this.mainWindow.spawnv(['flatpak-spawn', '--host', 'bash', '-c', 'pkexec', command]).catch(this.mainWindow.handleError.bind(this.mainWindow));
+                    full_command += "\n" + command;
+
                 }
+                this.mainWindow.spawnv(['flatpak-spawn', '--host', 'gnome-terminal', '--', 'bash', '-c', full_command]).catch(this.mainWindow.handleError.bind(this.mainWindow));
                 return;
             }
-            this.mainWindow.spawnv(['flatpak-spawn', '--host', 'bash', '-c', 'pkexec', command]).catch(this.mainWindow.handleError.bind(this.mainWindow));
+            this.mainWindow.spawnv(['flatpak-spawn', '--host','gnome-terminal', '--', 'bash', '-c', command]).catch(this.mainWindow.handleError.bind(this.mainWindow));
         }
     }
 
@@ -190,12 +199,7 @@ export const PresentationWindow = GObject.registerClass({
                         label: 'Show Command',
                         style: '',
                         command: 'showCommand ' + update.shown_command
-                    },
-                    index === 0 ? {
-                        label: 'Execute All',
-                        style: 'execute',
-                        command: "all"
-                    } : undefined
+                    }
                 ]
             };
         });
