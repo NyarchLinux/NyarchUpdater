@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: implement command images">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/presentation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/presentation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
-    </list>
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: implement checksuccess, needs a fix" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -102,7 +98,7 @@
       <workItem from="1729173559267" duration="2173000" />
       <workItem from="1729858988998" duration="4000" />
       <workItem from="1729859183220" duration="6901000" />
-      <workItem from="1729866097853" duration="302000" />
+      <workItem from="1729866097853" duration="603000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -336,7 +332,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729175710475</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="feat: implement checksuccess, needs a fix">
+      <option name="closed" value="true" />
+      <created>1729866503714</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1729866503714</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -357,7 +361,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix: finally made a request, made the update check work" />
     <MESSAGE value="feat: made a guide" />
     <MESSAGE value="feat: started making package listings" />
     <MESSAGE value="fix: access to flatpack environment" />
@@ -382,6 +385,7 @@
     <MESSAGE value="fix: show the image" />
     <MESSAGE value="fix: use GtkPicture instead of GtkImage" />
     <MESSAGE value="feat: implement command images" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: implement command images" />
+    <MESSAGE value="feat: implement checksuccess, needs a fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: implement checksuccess, needs a fix" />
   </component>
 </project>

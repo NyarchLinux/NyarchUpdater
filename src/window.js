@@ -202,6 +202,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
             this.resetButton(box, spinner);
             throw err;
         });
+        // TODO fix the fact any error thrown are NOT caught
         const endpointUpdates = await this.fetchUpdatesEndpoint().catch(err => {
             this.resetButton(box, spinner);
             throw err;
