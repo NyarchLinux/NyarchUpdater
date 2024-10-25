@@ -81,6 +81,8 @@ export const PresentationWindow = GObject.registerClass({
         this.pages.push(...this.formatPages(update));
         this.pages.push(lastSlide);
 
+        this.buttonBoxes = new Array(this.pages.length).fill(undefined);
+
         for (const page of this.pages) {
             this._carousel.append(await this.generatePage(page));
         }
@@ -92,20 +94,42 @@ export const PresentationWindow = GObject.registerClass({
         this.onPageChanged(this._carousel, 0);
     }
 
+    get slides() {
+        return this._carousel.get_n_pages();
+    }
+
     next() {
         const position = this._carousel.get_position();
         const nPages = this._carousel.get_n_pages();
-        if (position < nPages - 1) this._carousel.scroll_to(this._carousel.get_nth_page(this._carousel.get_position() + 1), true);
+        const carouselContent = this._carousel.get_nth_page(this._carousel.get_position() + 1);
+        if (position < nPages - 1) this._carousel.scroll_to(carouselContent, true);
+    }
+
+    goTo(page) {
+        this._carousel.scroll_to(this._carousel.get_nth_page(page), true);
     }
 
     previous() {
         const position = this._carousel.get_position();
         if (position > 0) this._carousel.scroll_to(this._carousel.get_nth_page(this._carousel.get_position() - 1), true);
+        if (!this._carousel.interactive) this._carousel.set_interactive(true);
     }
 
     onPageChanged(carousel, page) {
         this._previous.set_sensitive(page > 0);
         this._next.set_sensitive(page < carousel.get_n_pages() - 1);
+        const position = carousel.get_position();
+
+        const skipButton = this.buttonBoxes[position].find(button => button.label === 'Skip');
+        if (skipButton && !skipButton.sensitive) {
+            // prevent scrolling and next button from being enabled until the command is executed and command executed successfully
+            this._next.set_sensitive(false);
+            this._carousel.set_interactive(false);
+            // if the skip button exists and is disabled, then a check success button must exist too
+            const checkSuccessButton = this.buttonBoxes[position].find(button => button.label === 'Check Success');
+            if (!checkSuccessButton) return;
+            checkSuccessButton.set_sensitive(false);
+        }
     }
 
     async generatePage(page) {
@@ -116,6 +140,8 @@ export const PresentationWindow = GObject.registerClass({
         const buttons = builder.get_object('buttonsBox');
         const image = builder.get_object('image');
         const icon = builder.get_object('icon');
+
+        const buttonChilds = [];
 
         for (const buttonData of page.buttons) {
             if (!buttonData) continue;
@@ -134,6 +160,7 @@ export const PresentationWindow = GObject.registerClass({
             button.set_sensitive(!buttonData.disabled);
             button.connect('clicked', this.onButtonClick.bind(this));
             buttons.append(button);
+            buttonChilds.push(button);
         }
 
         if (page.image) {
@@ -156,16 +183,16 @@ export const PresentationWindow = GObject.registerClass({
         title.set_label(page.title);
         body.set_label(page.body);
 
+        this.buttonBoxes[this.pages.indexOf(page)] = buttonChilds;
+
         return uiPage;
     }
 
-    onButtonClick(button) {
+    async onButtonClick(button) {
         const command = this.commands[button];
-        log(command)
         if (command === 'skip') {
             this.next();
         } else if (command.startsWith('showCommand')) {
-            // show a new window with the command and a close button
             const dialog = new Gtk.Dialog({transient_for: this, modal: true});
             dialog.set_title('Command');
             dialog.set_default_size(800, 600);
@@ -178,22 +205,68 @@ export const PresentationWindow = GObject.registerClass({
             closeButton.connect('clicked', () => dialog.close());
             dialog.add_action_widget(closeButton, Gtk.ResponseType.CLOSE);
             dialog.show();
-        } else if (command == "closewindow") {
-            this.destroy()
+        } else if (command === "closewindow") {
+            this.destroy();
+        } else if (command.startsWith('checkSuccess')) {
+            // TODO fix stdout never fucking giving me an goddamn stdout or a stderr to debug
+            let stdout = await this.mainWindow.spawnvWithStdout(['flatpak-spawn', '--host','gnome-terminal', '--', 'bash', '-c', command.replace("checkSuccess ", "")]).catch(this.mainWindow.handleError.bind(this.mainWindow));
+            if (stdout) stdout = Boolean(stdout.trim());
+            const buttonBox = this.buttonBoxes[this._carousel.get_position()];
+            if (!stdout) {
+                const dialog = Adw.AlertDialog.new("An error occured!", null);
+                dialog.set_body("The command did not execute successfully. Please try again.");
+                dialog.add_response("close", "_Close");
+                dialog.set_default_response("close");
+                dialog.set_close_response("close");
+                dialog.connect("response", () => {
+                    dialog.close();
+                });
+                dialog.present(dialog);
+                return;
+            }
+
+            const nextButton = buttonBox.find(button => button.label === 'Execute');
+            if (nextButton) {
+                nextButton.set_sensitive(true);
+            }
+            const skipButton = buttonBox.find(button => button.label === 'Skip');
+            if (skipButton) {
+                skipButton.set_sensitive(true);
+            }
+            const checkSuccessButton = buttonBox.find(button => button.label === 'Check Success');
+            if (checkSuccessButton) {
+                checkSuccessButton.set_sensitive(false);
+            }
+
+            this.next();
         } else {
             button.set_sensitive(false);
             if (command === 'all') {
-                var full_command = "";
+                var fullCommand = "";
                 for (const command of Object.values(this.commands)) {
-                    if (command === 'skip' || command === 'all') continue;
-                    // TODO check if multiple command taking long times runs in parallel, if son, run them in sequence
-                    full_command += "\n" + command;
-
+                    // Ignore the commands that are not meant to be executed all at once
+                    if (
+                        ["all", "skip", "closewindow"].includes(command) ||
+                        command.startsWith("xdg-open") ||
+                        command.startsWith("showCommand") ||
+                        command.startsWith("checkSuccess")
+                    ) continue;
+                    fullCommand += "\n" + command;
                 }
-                this.mainWindow.spawnv(['flatpak-spawn', '--host', 'gnome-terminal', '--', 'bash', '-c', full_command]).catch(this.mainWindow.handleError.bind(this.mainWindow));
+                // wait for the terminal to finish executing the commands
+                await this.mainWindow.spawnv(['flatpak-spawn', '--host', 'gnome-terminal', '--', 'bash', '-c', fullCommand]).catch(this.mainWindow.handleError.bind(this.mainWindow));
+                this.goTo(Number(this.slides) - 1);
                 return;
             }
-            this.mainWindow.spawnv(['flatpak-spawn', '--host','gnome-terminal', '--', 'bash', '-c', command]).catch(this.mainWindow.handleError.bind(this.mainWindow));
+            await this.mainWindow.spawnv(['flatpak-spawn', '--host','gnome-terminal', '--', 'bash', '-c', command]).catch(this.mainWindow.handleError.bind(this.mainWindow));
+
+            const buttonBox = this.buttonBoxes[this._carousel.get_position()];
+            const checkSuccessButton = buttonBox.find(button => button.label === 'Check Success');
+            if (checkSuccessButton) {
+                checkSuccessButton.set_sensitive(true);
+            } else {
+                this.next();
+            }
         }
     }
 
@@ -201,8 +274,6 @@ export const PresentationWindow = GObject.registerClass({
         const updates = fetchUpdatesResult.updates;
 
         return updates.map(update => {
-            const index = updates.indexOf(update);
-
             return {
                 title: update.title,
                 body: update.description,
@@ -212,7 +283,7 @@ export const PresentationWindow = GObject.registerClass({
                         label: 'Skip',
                         style: 'destructive-action',
                         command: 'skip',
-                        disabled: !update.skippable
+                        disabled: !update.skippable,
                     },
                     {
                         label: 'Execute',
@@ -223,7 +294,12 @@ export const PresentationWindow = GObject.registerClass({
                         label: 'Show Command',
                         style: '',
                         command: 'showCommand ' + update.shown_command
-                    }
+                    },
+                    update.checksuccess ? {
+                        label: 'Check Success',
+                        style: 'suggested-action',
+                        command: 'checkSuccess ' + update.checksuccess
+                    } : null
                 ]
             };
         });

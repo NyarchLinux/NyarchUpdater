@@ -67,7 +67,9 @@ export const NyarchupdaterWindow = GObject.registerClass({
     fetchUpdatesEndpoint() {
         return new Promise(async (resolve, reject) => {
             try {
-                const json = await this.fetch("https://nyarchlinux.moe/update.json");
+                const json = await this.fetch("http://localhost:3000/updates.json").catch(err => {
+                    reject(err);
+                });
                 const [ok, current] = GLib.file_get_contents("/version");
                 if (!ok) {
                     reject("Could not read /version file");
@@ -137,8 +139,8 @@ export const NyarchupdaterWindow = GObject.registerClass({
         const updateList = [];
         for (const line of lines) {
             // regex to match the package name, current version, and latest version from platpak remote-ls --updates
-            // Name         Application ID              Version  Branch Installation
-            // org.kde.kdenlive org.kde.kdenlive           21.08.2  stable system
+            // Name             Application ID   Version  Branch Installation
+            // org.kde.kdenlive org.kde.kdenlive 21.08.2  stable system
             const match = line.match(/(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)/);
             if (match) {
                 updateList.push({
@@ -167,12 +169,14 @@ export const NyarchupdaterWindow = GObject.registerClass({
         } else {
             this.setState("nyarch", "success");
         }
+
         if (localUpdates.length) {
             // the count variable you putted in the for loop is not used, so I removed it, as count is literally the length of the array. As for the text, simply join() the array with a newline character
             this.setState("arch", "updateAvailable", localUpdates.map(update => `${update.name} ${update.current} -> ${update.latest}`).join('\n'));
         } else {
             this.setState("arch", "success");
         }
+
         if (flatpakUpdates.length) {
             this.setState("flatpak", "updateAvailable", flatpakUpdates.map(update => `${update.name} -> ${update.latest}`).join('\n'));
         } else {
@@ -322,6 +326,24 @@ export const NyarchupdaterWindow = GObject.registerClass({
                         resolve(stdout);
                     } else {
                         resolve(null);
+                    }
+                });
+            } catch (e) {
+                reject(e)
+            }
+        });
+    }
+
+    spawnvWithStdout(args) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let proc = this.launcher.spawnv(args);
+                proc.communicate_utf8_async(null, null, (proc, res) => {
+                    let [,stdout,stderr,err] = proc.communicate_utf8_finish(res);
+                    if (proc.get_successful()) {
+                        resolve(stdout);
+                    } else {
+                        resolve(stderr);
                     }
                 });
             } catch (e) {
