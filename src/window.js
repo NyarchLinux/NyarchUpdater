@@ -58,6 +58,23 @@ export const NyarchupdaterWindow = GObject.registerClass({
         this.launcher.setenv("LANG", "C", true);
         this.init();
         this.application = application;
+        this.config_dir = GLib.get_user_config_dir();
+    }
+    /**
+     * Used to download the file in {configdir}/cache/update.json and to check if the update is signed with the right key
+     * @returns {Promise<bool>}
+     */
+    checkSign() {
+        return new Promise(async (resolve, reject) => {
+                const command = `rm -rf ${this.config_dir}/cache && mkdir ${this.config_dir}/cache && cd ${this.config_dir}/cache && wget https://nyarchlinux.moe/update.json && wget https://nyarchlinux.moe/update.json.sig && gpg --verify update.json.sig update.json`
+                const stdout = await this.spawnv(['bash', '-c', command]);
+                if (!stdout) {
+                  log(command)
+                  resolve(false);
+                } else {
+                  resolve(true);
+                }
+              });
     }
 
     /**
@@ -67,9 +84,12 @@ export const NyarchupdaterWindow = GObject.registerClass({
     fetchUpdatesEndpoint() {
         return new Promise(async (resolve, reject) => {
             try {
-                const json = await this.fetch("https://nyarchlinux.moe/update.json").catch(err => {
-                    reject(err);
-                });
+                const sign = await this.checkSign();
+                if (!sign) {
+                    // TODO Check the error and notify it
+                    reject(null);
+                }
+                const json = JSON.parse(String(GLib.file_get_contents(this.config_dir + "/cache/update.json")[1]));
                 const [ok, current] = GLib.file_get_contents("/version");
                 if (!ok) {
                     reject("Could not read /version file");
