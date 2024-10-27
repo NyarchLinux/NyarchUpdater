@@ -40,5 +40,16 @@
                 }
             ]
         }
-    ]
+        {
+            "name": "Key",
+            "buildsystem": "simple",
+            "build-commands": ["gpg --import data/public.asc"],
+            "sources" : [
+                {
+                    "type": "file",
+                    "url": "data/public.asc",
+                }
+            ]
+        }
+    ],
 }

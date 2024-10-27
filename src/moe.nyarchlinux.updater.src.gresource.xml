@@ -4,5 +4,6 @@
     <file>main.js</file>
     <file>window.js</file>
     <file>presentation.js</file>
+    <file>../data/public.asc</file>
   </gresource>
 </gresources>
