@@ -209,8 +209,8 @@ export const PresentationWindow = GObject.registerClass({
             this.destroy();
         } else if (command.startsWith('checkSuccess')) {
             // TODO fix stdout never fucking giving me an goddamn stdout or a stderr to debug
-            let stdout = await this.mainWindow.spawnvWithStdout(['flatpak-spawn', '--host','gnome-terminal', '--', 'bash', '-c', command.replace("checkSuccess ", "")]).catch(this.mainWindow.handleError.bind(this.mainWindow));
-            if (stdout) stdout = Boolean(stdout.trim());
+            let stdout = await this.mainWindow.spawnvWithStdout(['flatpak-spawn', '--host', 'bash', '-c', command.replace("checkSuccess ", "")]).catch(this.mainWindow.handleError.bind(this.mainWindow));
+            if (stdout) stdout = stdout.trim() === "true" ? true : false;
             const buttonBox = this.buttonBoxes[this._carousel.get_position()];
             if (!stdout) {
                 const dialog = Adw.AlertDialog.new("An error occured!", null);
@@ -222,6 +222,9 @@ export const PresentationWindow = GObject.registerClass({
                     dialog.close();
                 });
                 dialog.present(dialog);
+                // Allow the user to run the command again
+                const executeButton = buttonBox.find(button => button.label === 'Execute');
+                executeButton.set_sensitive(true);
                 return;
             }
 

@@ -67,7 +67,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
     fetchUpdatesEndpoint() {
         return new Promise(async (resolve, reject) => {
             try {
-                const json = await this.fetch("http://localhost:3000/updates.json").catch(err => {
+                const json = await this.fetch("https://nyarchlinux.moe/update.json").catch(err => {
                     reject(err);
                 });
                 const [ok, current] = GLib.file_get_contents("/version");
