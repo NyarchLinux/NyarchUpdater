@@ -89,7 +89,8 @@ export const NyarchupdaterWindow = GObject.registerClass({
                     // TODO Check the error and notify it
                     reject(null);
                 }
-                const json = JSON.parse(String(GLib.file_get_contents(this.config_dir + "/cache/update.json")[1]));
+                const decoder = new TextDecoder('utf-8');
+                const json = JSON.parse(decoder.decode(GLib.file_get_contents(this.config_dir + "/cache/update.json")[1]));
                 const [ok, current] = GLib.file_get_contents("/version");
                 if (!ok) {
                     reject("Could not read /version file");
