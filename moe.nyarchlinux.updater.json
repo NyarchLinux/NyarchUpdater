@@ -39,17 +39,18 @@
                     "branch" : "main"
                 }
             ]
-        }
+        },
         {
             "name": "Key",
             "buildsystem": "simple",
-            "build-commands": ["gpg --import data/public.asc"],
+            "build-commands": ["gpg --import public.asc"],
             "sources" : [
                 {
                     "type": "file",
-                    "url": "data/public.asc",
+                    "path": "data/public.asc",
+                    "sha256": "dd8fd09069ec664c96d3be4f92b43b80899b13a7259c401b8afbe321a9ed7cc2"
                 }
             ]
         }
-    ],
+    ]
 }
