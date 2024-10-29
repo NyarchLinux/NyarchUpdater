@@ -43,12 +43,16 @@
         {
             "name": "Key",
             "buildsystem": "simple",
-            "build-commands": ["gpg --import public.asc"],
+            "build-commands": [
+                "mkdir -p ${FLATPAK_DEST}/data/",
+                "cp public.asc ${FLATPAK_DEST}/data/public.asc"
+            ],
             "sources" : [
                 {
                     "type": "file",
                     "path": "data/public.asc",
-                    "sha256": "dd8fd09069ec664c96d3be4f92b43b80899b13a7259c401b8afbe321a9ed7cc2"
+                    "sha256": "dd8fd09069ec664c96d3be4f92b43b80899b13a7259c401b8afbe321a9ed7cc2",
+                    "dest-filename": "public.asc"
                 }
             ]
         }
