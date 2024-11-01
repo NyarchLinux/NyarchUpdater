@@ -26,6 +26,7 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
 
 import { PresentationWindow } from './presentation.js';
+import { stackLog } from './utils.js';
 
 export const NyarchupdaterWindow = GObject.registerClass({
     GTypeName: 'NyarchupdaterWindow',
@@ -63,17 +64,19 @@ export const NyarchupdaterWindow = GObject.registerClass({
         this.first_start = this.settings.get_boolean('first-start');
         if (this.first_start) {
             this.settings.set_boolean('first-start', false);
-            this.importKey();
+            this.importKey().catch(this.handleError.bind(this));
         }
+
+        stackLog("log", "Hello fucking nigger")
     }
 
     /**
      * Used to import the public key
      */
-    importKey() {
+    async importKey() {
         const command = `gpg --import /app/data/public.asc`
-        const stdout = this.spawnv(['bash', '-c', command]);
-        log(stdout)
+        const stdout = await this.spawnv(['bash', '-c', command]);
+        stackLog("log", stdout)
     }
     /**
      * Used to download the file in {configdir}/cache/update.json and to check if the update is signed with the right key
@@ -81,15 +84,17 @@ export const NyarchupdaterWindow = GObject.registerClass({
      */
     checkSign() {
         return new Promise(async (resolve, reject) => {
-                const command = `rm -rf ${this.config_dir}/cache && mkdir -p ${this.config_dir}/cache && cd ${this.config_dir}/cache && wget https://nyarchlinux.moe/update.json && wget https://nyarchlinux.moe/update.json.sig && gpg --verify update.json.sig update.json`
-                const stdout = await this.spawnv(['bash', '-c', command]);
-                if (!stdout) {
-                  log(command)
-                  resolve(false);
-                } else {
-                  resolve(true);
-                }
-              });
+            const command = `rm -rf ${this.config_dir}/cache && mkdir -p ${this.config_dir}/cache && cd ${this.config_dir}/cache && wget https://nyarchlinux.moe/update.json && wget https://nyarchlinux.moe/update.json.sig && gpg --verify update.json.sig update.json`
+            const stdout = await this.spawnv(['bash', '-c', command]).catch(err => {
+                reject(err);
+            });
+            if (!stdout) {
+                stackLog("log", command)
+                resolve(false);
+            } else {
+                resolve(true);
+            }
+        });
     }
 
     /**
@@ -363,24 +368,6 @@ export const NyarchupdaterWindow = GObject.registerClass({
                         resolve(stdout);
                     } else {
                         resolve(null);
-                    }
-                });
-            } catch (e) {
-                reject(e)
-            }
-        });
-    }
-
-    spawnvWithStdout(args) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                let proc = this.launcher.spawnv(args);
-                proc.communicate_utf8_async(null, null, (proc, res) => {
-                    let [,stdout,stderr,err] = proc.communicate_utf8_finish(res);
-                    if (proc.get_successful()) {
-                        resolve(stdout);
-                    } else {
-                        resolve(stderr);
                     }
                 });
             } catch (e) {

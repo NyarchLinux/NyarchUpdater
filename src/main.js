@@ -62,8 +62,7 @@ export const NyarchupdaterApplication = GObject.registerClass(
         vfunc_activate() {
             let {active_window} = this;
 
-            if (!active_window)
-                active_window = new NyarchupdaterWindow(this);
+            if (!active_window) active_window = new NyarchupdaterWindow(this);
 
             active_window.present();
         }
@@ -72,5 +71,5 @@ export const NyarchupdaterApplication = GObject.registerClass(
 
 export function main(argv) {
     const application = new NyarchupdaterApplication();
-    return application.runAsync(argv);
+    return application.runAsync(argv).catch(logError);
 }
