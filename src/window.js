@@ -130,6 +130,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
                 }
                 const currentVersion = new TextDecoder().decode(current).trim();
                 const newer = json[currentVersion];
+                this.newer = newer
                 if (!newer) {
                     resolve(null);
                 } else {

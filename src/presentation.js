@@ -40,7 +40,7 @@ export const PresentationWindow = GObject.registerClass({
     }
 
     async init() {
-        const update = await this.mainWindow.fetchUpdatesEndpoint().catch(this.mainWindow.handleError.bind(this.mainWindow));
+        const update = this.mainWindow.newer
         const firstSlide = {
             image: update.logo,
             title: `Nyarch Linux ${update.version}: ${update.codename}`,
