@@ -57,17 +57,15 @@ export const NyarchupdaterWindow = GObject.registerClass({
                 Gio.SubprocessFlags.STDERR_PIPE)
         });
         this.launcher.setenv("LANG", "C", true);
+        this.config_dir = GLib.get_user_config_dir();
         this.init();
         this.application = application;
-        this.config_dir = GLib.get_user_config_dir();
         this.settings = new Gio.Settings({ schema_id: 'moe.nyarchlinux.updater' });
         this.first_start = this.settings.get_boolean('first-start');
         if (this.first_start) {
             this.settings.set_boolean('first-start', false);
             this.importKey().catch(this.handleError.bind(this));
         }
-
-        stackLog("log", "Hello fucking nigger")
     }
 
     /**
@@ -84,9 +82,9 @@ export const NyarchupdaterWindow = GObject.registerClass({
      */
     checkSign() {
         return new Promise(async (resolve, reject) => {
-            const command = `rm -rf ${this.config_dir}/cache && mkdir -p ${this.config_dir}/cache && cd ${this.config_dir}/cache && wget https://nyarchlinux.moe/update.json && wget https://nyarchlinux.moe/update.json.sig && gpg --verify update.json.sig update.json`
+            const command = `rm -rf ${this.config_dir}/cache && mkdir -p ${this.config_dir}/cache && cd ${this.config_dir}/cache && wget -T 5 -t 1 https://nyarchlinux.moe/update.json && wget -T 5 -t 1 https://nyarchlinux.moe/update.json.sig && gpg --verify update.json.sig update.json`
             const stdout = await this.spawnv(['bash', '-c', command]).catch(err => {
-                reject(err);
+                resolve(false);
             });
             if (!stdout) {
                 stackLog("log", command)
@@ -106,8 +104,22 @@ export const NyarchupdaterWindow = GObject.registerClass({
             try {
                 const sign = await this.checkSign();
                 if (!sign) {
-                    // TODO Check the error and notify it
+                  // Attempt to download the update.json file separately to determine the error type
+                  log("Sign check failed");
+                  const command = `cd ${this.config_dir}/cache && wget -T 5 -t 1 https://nyarchlinux.moe/update.json && [ -e "update.json" ]`
+                  const stdout = await this.spawnv(['bash', '-c', command]);
+                  if (!stdout) {
+                    this.createDialog("Connection Error", "Failed to connect to the update server. Please check your internet connection and try again.");
+                    reject(err);
+                    return
+                  }
+
+                  // If update.json downloads successfully, it's likely a signature error
+                  if (stdout) {
+                    this.createDialog("Signature Error", "The downloaded update file could not be verified with the correct signature. This might indicate a security issue. Check Nyarch news channels");
                     reject(null);
+                  }
+                  return;
                 }
                 const decoder = new TextDecoder('utf-8');
                 const json = JSON.parse(decoder.decode(GLib.file_get_contents(this.config_dir + "/cache/update.json")[1]));
@@ -141,10 +153,11 @@ export const NyarchupdaterWindow = GObject.registerClass({
      * @returns {Promise<Array<ArchUpdatePackageInfo>>}
      */
     async fetchLocalUpdates() {
-        const stdout = await this.spawnv(['flatpak-spawn', '--host', 'bash', '-c', '/usr/bin/checkupdates']);
+        const stdout = await this.spawnv(['flatpak-spawn', '--host', 'bash', '-c', '/usr/bin/checkupdates']).catch( err => {reject(null);});
         if (!stdout) {
             return [];
         }
+
         const lines = stdout.split('\n');
         const updateList = [];
         for (const line of lines) {
@@ -204,9 +217,11 @@ export const NyarchupdaterWindow = GObject.registerClass({
      * @param {any[]} flatpakUpdates
      * @returns {Promise<void>}
      */
-    async updateWindow(localUpdates, endpointUpdates, flatpakUpdates) {
+    async updateWindow(localUpdates, endpointUpdates, flatpakUpdates, errors) {
         if (endpointUpdates) {
             this.setState("nyarch", "updateAvailable", `A new version of Nyarch Linux is available: ${endpointUpdates}`);
+        } else if (errors[1]) {
+            this.setState("nyarch", "error");
         } else {
             this.setState("nyarch", "success");
         }
@@ -214,12 +229,16 @@ export const NyarchupdaterWindow = GObject.registerClass({
         if (localUpdates.length) {
             // the count variable you putted in the for loop is not used, so I removed it, as count is literally the length of the array. As for the text, simply join() the array with a newline character
             this.setState("arch", "updateAvailable", localUpdates.map(update => `${update.name} ${update.current} -> ${update.latest}`).join('\n'));
+        } else if (errors[0]) {
+            this.setState("arch", "error");
         } else {
             this.setState("arch", "success");
         }
 
         if (flatpakUpdates.length) {
             this.setState("flatpak", "updateAvailable", flatpakUpdates.map(update => `${update.name} -> ${update.latest}`).join('\n'));
+        } else if (errors[2]) {
+            this.setState("flatpak", "error");
         } else {
             this.setState("flatpak", "success");
         }
@@ -239,23 +258,29 @@ export const NyarchupdaterWindow = GObject.registerClass({
         box.set_center_widget(loadingLabel);
         this._refresh_button.set_child(box);
         spinner.start();
-        const localUpdates = await this.fetchLocalUpdates().catch(err => {
+        const errors = [false, false, false]
+        const localUpdatesPromise = this.fetchLocalUpdates().catch(err => {
             this.resetButton(box, spinner);
-            throw err;
+            errors[0] = true
         });
         // TODO fix the fact any error thrown are NOT caught
-        const endpointUpdates = await this.fetchUpdatesEndpoint().catch(err => {
+        // create a dialog with this.createDialog with the error
+        const endpointUpdatesPromise = this.fetchUpdatesEndpoint().catch(err => {
             this.resetButton(box, spinner);
-            throw err;
+            errors[1] = true
         });
-        const flatpakUpdates = await this.fetchFlatpakUpdates().catch(err => {
+        const flatpakUpdatesPromise = this.fetchFlatpakUpdates().catch(err => {
             this.resetButton(box, spinner);
-            throw err;
+            errors[2] = true
         });
+
+        const localUpdates = await localUpdatesPromise;
+        const endpointUpdates = await endpointUpdatesPromise;
+        const flatpakUpdates = await flatpakUpdatesPromise;
         this._refresh_button.set_sensitive(true);
         spinner.stop();
         box.set_center_widget(doneLabel);
-        this.updateWindow(localUpdates, endpointUpdates, flatpakUpdates).catch(this.handleError.bind(this));
+        this.updateWindow(localUpdates, endpointUpdates, flatpakUpdates, errors).catch(this.handleError.bind(this));
     }
 
     /**
@@ -302,7 +327,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
      * @param {StateType} state The state to set the element to
      * @param {string} [label] The content of the label
      */
-    setState(type, state = "idle", label) {
+    setState(type, state = "loading", label) {
         switch(state) {
             case "loading":
                 if (type !== "nyarch") this[`_${type}_label`].set_label(label || "Checking for updates...");
@@ -387,6 +412,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
         return new Promise(async (resolve, reject) => {
             try {
                 const session = Soup.Session.new();
+                session.timeout = 10;
                 let message = new Soup.Message({
                     method: "GET",
                     uri: GLib.uri_parse(url, GLib.UriFlags.NONE)

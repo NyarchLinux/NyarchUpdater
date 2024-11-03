@@ -41,11 +41,11 @@
             ]
         },
         {
-            "name": "Key",
+            "name": "PublicKey",
             "buildsystem": "simple",
             "build-commands": [
                 "mkdir -p ${FLATPAK_DEST}/data/",
-                "cp data/public.asc ${FLATPAK_DEST}/data/public.asc"
+                "cp public.asc ${FLATPAK_DEST}/data/public.asc"
             ],
             "sources" : [
                 {
