@@ -208,7 +208,7 @@ export const PresentationWindow = GObject.registerClass({
         } else if (command === "closewindow") {
             this.destroy();
         } else if (command.startsWith('checkSuccess')) {
-            let stdout = await this.mainWindow.spawnvWithStdout(['flatpak-spawn', '--host', 'bash', '-c', command.replace("checkSuccess ", "")]).catch(this.mainWindow.handleError.bind(this.mainWindow));
+            let stdout = await this.mainWindow.spawnv(['flatpak-spawn', '--host', 'bash', '-c', command.replace("checkSuccess ", "")]).catch(this.mainWindow.handleError.bind(this.mainWindow));
             if (stdout) stdout = stdout.trim() === "true";
             const buttonBox = this.buttonBoxes[this._carousel.get_position()];
             if (!stdout) {
