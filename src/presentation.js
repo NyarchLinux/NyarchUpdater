@@ -207,6 +207,7 @@ export const PresentationWindow = GObject.registerClass({
             dialog.show();
         } else if (command === "closewindow") {
             this.destroy();
+            this.mainWindow.window = null;
         } else if (command.startsWith('checkSuccess')) {
             let stdout = await this.mainWindow.spawnv(['flatpak-spawn', '--host', 'bash', '-c', command.replace("checkSuccess ", "")]).catch(this.mainWindow.handleError.bind(this.mainWindow));
             if (stdout) stdout = stdout.trim() === "true";
