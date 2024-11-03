@@ -84,7 +84,7 @@ export const PresentationWindow = GObject.registerClass({
         this.buttonBoxes = new Array(this.pages.length).fill(undefined);
 
         for (const page of this.pages) {
-            this._carousel.append(await this.generatePage(page));
+            this._carousel.append(this.generatePage(page));
         }
 
         this._next.connect('clicked', this.next.bind(this));
@@ -132,7 +132,7 @@ export const PresentationWindow = GObject.registerClass({
         }
     }
 
-    async generatePage(page) {
+    generatePage(page) {
         const builder = Gtk.Builder.new_from_resource('/moe/nyarchlinux/updater/carousel_page.ui');
         const uiPage = builder.get_object('page');
         const body = builder.get_object('body');
@@ -164,12 +164,7 @@ export const PresentationWindow = GObject.registerClass({
         }
 
         if (page.image) {
-            const response = await this.mainWindow.fetchBytes(page.image);
-            const loader = new GtkPixbuf.PixbufLoader(response);
-            loader.write_bytes(response);
-            loader.close();
-            image.set_pixbuf(loader.get_pixbuf());
-            image.set_visible(true);
+            this.loadImage(page.image, image);
         }
         if (page.icon) {
             icon.set_from_icon_name(page.icon);
@@ -187,9 +182,21 @@ export const PresentationWindow = GObject.registerClass({
 
         return uiPage;
     }
+    async loadImage(imageUrl, image) {
+          const response = await this.mainWindow.fetchBytes(imageUrl);
+          const loader = new GtkPixbuf.PixbufLoader(response);
+          loader.write_bytes(response);
+          loader.close();
+          image.set_pixbuf(loader.get_pixbuf());
+          image.set_visible(true);
+    }
 
     async onButtonClick(button) {
         const command = this.commands[button];
+        if (!command) {
+          log("Error: undefined");
+          return
+        }
         if (command === 'skip') {
             this.next();
         } else if (command.startsWith('showCommand')) {
@@ -213,7 +220,7 @@ export const PresentationWindow = GObject.registerClass({
             if (stdout) stdout = stdout.trim() === "true";
             const buttonBox = this.buttonBoxes[this._carousel.get_position()];
             if (!stdout) {
-                const dialog = Adw.AlertDialog.new("An error occured!", null);
+                const dialog = Adw.AlertDialog.new("An error occurred!", null);
                 dialog.set_body("The command did not execute successfully. Please try again.");
                 dialog.add_response("close", "_Close");
                 dialog.set_default_response("close");
@@ -261,8 +268,7 @@ export const PresentationWindow = GObject.registerClass({
                 this.goTo(Number(this.slides) - 1);
                 return;
             }
-            await this.mainWindow.spawnv(['flatpak-spawn', '--host','gnome-terminal', '--', 'bash', '-c', command]).catch(this.mainWindow.handleError.bind(this.mainWindow));
-
+            this.mainWindow.spawnv(['flatpak-spawn', '--host','gnome-terminal', '--', 'bash', '-c', command]).catch(err => {});
             const buttonBox = this.buttonBoxes[this._carousel.get_position()];
             const checkSuccessButton = buttonBox.find(button => button.label === 'Check Success');
             if (checkSuccessButton) {

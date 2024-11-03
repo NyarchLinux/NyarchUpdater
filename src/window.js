@@ -375,6 +375,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
     }
 
     handleError(error) {
+        log("Error");
         this.setState("arch", "error", "An error occurred");
         this.setState("flatpak", "error", "An error occurred");
         this.setState("nyarch", "error", "An error occurred");
