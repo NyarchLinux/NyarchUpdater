@@ -1,7 +1,3 @@
-## Disclaimer
-
-Nyarch Updater is not ready yet. It's still in development. You can't use it yet.
-
 # NyarchUpdater
 ![nyarchupdater-screenshots](https://github.com/user-attachments/assets/346f87aa-3d7e-481d-bc10-3c8702698cba)
 
