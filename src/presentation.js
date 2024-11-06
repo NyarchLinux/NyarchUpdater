@@ -23,6 +23,7 @@ import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk?version=4.0';
 import GtkPixbuf from 'gi://GdkPixbuf';
 
+// TODO fix the error when you close the window, open it again and try to close it again
 export const PresentationWindow = GObject.registerClass({
     GTypeName: 'PresentationWindow',
     Template: 'resource:///moe/nyarchlinux/updater/presentation.ui',
@@ -40,7 +41,7 @@ export const PresentationWindow = GObject.registerClass({
     }
 
     async init() {
-        const update = this.mainWindow.newer
+        const update = this.mainWindow.newer;
         const firstSlide = {
             image: update.logo,
             title: `Nyarch Linux ${update.version}: ${update.codename}`,
@@ -164,7 +165,8 @@ export const PresentationWindow = GObject.registerClass({
         }
 
         if (page.image) {
-            this.loadImage(page.image, image);
+            // Load the image. .catch() to solve the promise and ignore the error
+            this.loadImage(page.image, image).catch(() => {});
         }
         if (page.icon) {
             icon.set_from_icon_name(page.icon);
@@ -182,6 +184,7 @@ export const PresentationWindow = GObject.registerClass({
 
         return uiPage;
     }
+
     async loadImage(imageUrl, image) {
           const response = await this.mainWindow.fetchBytes(imageUrl);
           const loader = new GtkPixbuf.PixbufLoader(response);
@@ -195,12 +198,12 @@ export const PresentationWindow = GObject.registerClass({
         const command = this.commands[button];
         if (!command) {
           log("Error: undefined");
-          return
+          return;
         }
         if (command === 'skip') {
             this.next();
         } else if (command.startsWith('showCommand')) {
-            const dialog = new Gtk.Dialog({transient_for: this, modal: true});
+            const dialog = new Gtk.Dialog({ transient_for: this, modal: true });
             dialog.set_title('Command');
             dialog.set_default_size(800, 600);
             const content = new Gtk.TextView();
@@ -208,7 +211,7 @@ export const PresentationWindow = GObject.registerClass({
             content.set_monospace(true);
             content.get_buffer().set_text(command.replace("showCommand ", ""), command.replace("showCommand ", "").length);
             dialog.set_child(content);
-            const closeButton = new Gtk.Button({label: 'Close'});
+            const closeButton = new Gtk.Button({ label: 'Close' });
             closeButton.connect('clicked', () => dialog.close());
             dialog.add_action_widget(closeButton, Gtk.ResponseType.CLOSE);
             dialog.show();
@@ -268,7 +271,7 @@ export const PresentationWindow = GObject.registerClass({
                 this.goTo(Number(this.slides) - 1);
                 return;
             }
-            this.mainWindow.spawnv(['flatpak-spawn', '--host','gnome-terminal', '--', 'bash', '-c', command]).catch(err => {});
+            this.mainWindow.spawnv(['flatpak-spawn', '--host','gnome-terminal', '--', 'bash', '-c', command]).catch(() => {});
             const buttonBox = this.buttonBoxes[this._carousel.get_position()];
             const checkSuccessButton = buttonBox.find(button => button.label === 'Check Success');
             if (checkSuccessButton) {

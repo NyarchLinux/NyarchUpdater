@@ -50,19 +50,19 @@ export const NyarchupdaterWindow = GObject.registerClass({
     ],
 }, class NyarchupdaterWindow extends Adw.ApplicationWindow {
     constructor(application) {
-        super({ application});
+        super({ application });
 
         this.launcher = new Gio.SubprocessLauncher({
             flags: (Gio.SubprocessFlags.STDOUT_PIPE |
                 Gio.SubprocessFlags.STDERR_PIPE)
         });
         this.launcher.setenv("LANG", "C", true);
-        this.config_dir = GLib.get_user_config_dir();
+        this.configDir = GLib.get_user_config_dir();
         this.init();
         this.application = application;
         this.settings = new Gio.Settings({ schema_id: 'moe.nyarchlinux.updater' });
-        this.first_start = this.settings.get_boolean('first-start');
-        if (this.first_start) {
+        this.firstStart = this.settings.get_boolean('first-start');
+        if (this.firstStart) {
             this.settings.set_boolean('first-start', false);
             this.importKey().catch(this.handleError.bind(this));
         }
@@ -73,17 +73,16 @@ export const NyarchupdaterWindow = GObject.registerClass({
      */
     async importKey() {
         const command = `gpg --import /app/data/public.asc`
-        const stdout = await this.spawnv(['bash', '-c', command]);
-        stackLog("log", stdout)
+        await this.spawnv(['bash', '-c', command]).catch(this.handleError.bind(this));
     }
     /**
-     * Used to download the file in {configdir}/cache/update.json and to check if the update is signed with the right key
-     * @returns {Promise<bool>}
+     * Used to download the file in {configDir}/cache/update.json and to check if the update is signed with the right key
+     * @returns {Promise<boolean>}
      */
     checkSign() {
         return new Promise(async (resolve, reject) => {
-            const command = `rm -rf ${this.config_dir}/cache && mkdir -p ${this.config_dir}/cache && cd ${this.config_dir}/cache && wget -T 5 -t 1 https://nyarchlinux.moe/update.json && wget -T 5 -t 1 https://nyarchlinux.moe/update.json.sig && gpg --verify update.json.sig update.json`
-            const stdout = await this.spawnv(['bash', '-c', command]).catch(err => {
+            const command = `rm -rf ${this.configDir}/cache && mkdir -p ${this.configDir}/cache && cd ${this.configDir}/cache && wget -T 5 -t 1 https://nyarchlinux.moe/update.json && wget -T 5 -t 1 https://nyarchlinux.moe/update.json.sig && gpg --verify update.json.sig update.json`
+            const stdout = await this.spawnv(['bash', '-c', command]).catch(() => {
                 resolve(false);
             });
             if (!stdout) {
@@ -106,12 +105,12 @@ export const NyarchupdaterWindow = GObject.registerClass({
                 if (!sign) {
                   // Attempt to download the update.json file separately to determine the error type
                   log("Sign check failed");
-                  const command = `cd ${this.config_dir}/cache && wget -T 5 -t 1 https://nyarchlinux.moe/update.json && [ -e "update.json" ]`
+                  const command = `cd ${this.configDir}/cache && wget -T 5 -t 1 https://nyarchlinux.moe/update.json && [ -e "update.json" ]`
                   const stdout = await this.spawnv(['bash', '-c', command]);
                   if (!stdout) {
                     this.createDialog("Connection Error", "Failed to connect to the update server. Please check your internet connection and try again.");
                     reject(err);
-                    return
+                    return;
                   }
 
                   // If update.json downloads successfully, it's likely a signature error
@@ -122,7 +121,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
                   return;
                 }
                 const decoder = new TextDecoder('utf-8');
-                const json = JSON.parse(decoder.decode(GLib.file_get_contents(this.config_dir + "/cache/update.json")[1]));
+                const json = JSON.parse(decoder.decode(GLib.file_get_contents(this.configDir + "/cache/update.json")[1]));
                 const [ok, current] = GLib.file_get_contents("/version");
                 if (!ok) {
                     reject("Could not read /version file");
@@ -154,7 +153,9 @@ export const NyarchupdaterWindow = GObject.registerClass({
      * @returns {Promise<Array<ArchUpdatePackageInfo>>}
      */
     async fetchLocalUpdates() {
-        const stdout = await this.spawnv(['flatpak-spawn', '--host', 'bash', '-c', '/usr/bin/checkupdates']).catch( err => {reject(null);});
+        const stdout = await this.spawnv(['flatpak-spawn', '--host', 'bash', '-c', '/usr/bin/checkupdates']).catch(() => {
+            reject(null);
+        });
         if (!stdout) {
             return [];
         }
@@ -216,6 +217,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
      * @param {any[]} localUpdates
      * @param {any[]} endpointUpdates
      * @param {any[]} flatpakUpdates
+     * @param {boolean[]} errors
      * @returns {Promise<void>}
      */
     async updateWindow(localUpdates, endpointUpdates, flatpakUpdates, errors) {
@@ -259,20 +261,18 @@ export const NyarchupdaterWindow = GObject.registerClass({
         box.set_center_widget(loadingLabel);
         this._refresh_button.set_child(box);
         spinner.start();
-        const errors = [false, false, false]
-        const localUpdatesPromise = this.fetchLocalUpdates().catch(err => {
+        const errors = [false, false, false];
+        const localUpdatesPromise = this.fetchLocalUpdates().catch(() => {
             this.resetButton(box, spinner);
-            errors[0] = true
+            errors[0] = true;
         });
-        // TODO fix the fact any error thrown are NOT caught
-        // create a dialog with this.createDialog with the error
-        const endpointUpdatesPromise = this.fetchUpdatesEndpoint().catch(err => {
+        const endpointUpdatesPromise = this.fetchUpdatesEndpoint().catch(() => {
             this.resetButton(box, spinner);
-            errors[1] = true
+            errors[1] = true;
         });
-        const flatpakUpdatesPromise = this.fetchFlatpakUpdates().catch(err => {
+        const flatpakUpdatesPromise = this.fetchFlatpakUpdates().catch(() => {
             this.resetButton(box, spinner);
-            errors[2] = true
+            errors[2] = true;
         });
 
         const localUpdates = await localUpdatesPromise;
@@ -398,7 +398,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
                     }
                 });
             } catch (e) {
-                reject(e)
+                reject(e);
             }
         });
     }

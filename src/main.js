@@ -30,18 +30,18 @@ pkg.initFormat();
 export const NyarchupdaterApplication = GObject.registerClass(
     class NyarchupdaterApplication extends Adw.Application {
         constructor() {
-            super({application_id: 'moe.nyarchlinux.updater', flags: Gio.ApplicationFlags.DEFAULT_FLAGS});
+            super({ application_id: 'moe.nyarchlinux.updater', flags: Gio.ApplicationFlags.DEFAULT_FLAGS });
 
-            const quit_action = new Gio.SimpleAction({name: 'quit'});
-                quit_action.connect('activate', action => {
+            const quitAction = new Gio.SimpleAction({name: 'quit'});
+                quitAction.connect('activate', () => {
                 this.quit();
             });
-            this.add_action(quit_action);
+            this.add_action(quitAction);
             this.set_accels_for_action('app.quit', ['<primary>q']);
 
-            const show_about_action = new Gio.SimpleAction({name: 'about'});
-            show_about_action.connect('activate', action => {
-                let aboutParams = {
+            const showAboutAction = new Gio.SimpleAction({name: 'about'});
+            showAboutAction.connect('activate', () => {
+                const aboutParams = {
                     transient_for: this.active_window,
                     application_name: 'Nyarch Updater',
                     application_icon: 'moe.nyarchlinux.updater',
@@ -56,11 +56,11 @@ export const NyarchupdaterApplication = GObject.registerClass(
                 const aboutWindow = new Adw.AboutWindow(aboutParams);
                 aboutWindow.present();
             });
-            this.add_action(show_about_action);
+            this.add_action(showAboutAction);
         }
 
         vfunc_activate() {
-            let {active_window} = this;
+            let { active_window } = this;
 
             if (!active_window) active_window = new NyarchupdaterWindow(this);
 
