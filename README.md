@@ -4,6 +4,7 @@
 Nyarch Updater is a simple tool to update your Nyarch installation including:
 - Release updates
 - Packages updates
+- Flatpak updates
 
 Through a simple yet beautiful interface.
 
@@ -49,7 +50,7 @@ git clone https://github.com/NyarchLinux/NyarchUpdater.git
 cd NyarchUpdater
 ```
 
-You'll need [Gnome Builder](https://wiki.gnome.org/Apps/Builder), you can get it from [Flatpak](https://flathub.org/apps/org.gnome.Builder). Then, simply open the project with Gnome Builder to run it, and edit either in Gnome Builder or in your favorite text editor.
+You'll need your favorite IDE and [Flatpak](https://flathub.org/apps/org.gnome.Builder). Open the project, and enjoy! The only way for now to run it is by running the `run.sh` script, as Gnome Builder doesn't work correctly.
 
 ## Usage
 
