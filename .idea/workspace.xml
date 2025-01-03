@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="chore: add another task to do later">
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="chore: refractor code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/presentation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/presentation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -229,24 +227,26 @@
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Node.js.window.js.executor": "Run",
+    "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Shell Script.run.sh.executor": "Run",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/adam/Projets/NyarchUpdater",
+    "last_opened_file_path": "/home/adam/Projets/NyarchUpdater/run.sh",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "preferences.keymap",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager">
-    <configuration name="Start" type="ShConfigurationType">
+    <configuration name="run.sh" type="ShConfigurationType">
       <option name="SCRIPT_TEXT" value="" />
       <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
-      <option name="SCRIPT_PATH" value="run.sh" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/run.sh" />
       <option name="SCRIPT_OPTIONS" value="" />
       <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
       <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -262,7 +262,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-WS-242.23726.96" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-WS-243.21565.180" />
       </set>
     </attachedChunks>
   </component>
@@ -294,6 +294,9 @@
       <workItem from="1730477100702" duration="2705000" />
       <workItem from="1730907605128" duration="58000" />
       <workItem from="1730907938278" duration="2160000" />
+      <workItem from="1730910691458" duration="3527000" />
+      <workItem from="1735932322197" duration="73000" />
+      <workItem from="1735932609963" duration="859000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -580,7 +583,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: started making package listings" />
     <MESSAGE value="fix: access to flatpack environment" />
     <MESSAGE value="feat: local updates, update list" />
     <MESSAGE value="chore: idea files updates" />
@@ -605,6 +607,7 @@
     <MESSAGE value="feat: implement command images" />
     <MESSAGE value="feat: implement checksuccess, needs a fix" />
     <MESSAGE value="chore: add another task to do later" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: add another task to do later" />
+    <MESSAGE value="chore: refractor code" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: refractor code" />
   </component>
 </project>
