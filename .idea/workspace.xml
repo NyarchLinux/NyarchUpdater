@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="fix: flatpak updates version not shown correctly">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
-    </list>
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="fix: not being able to close the presentation window after closing it before and reopening it" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -298,7 +295,7 @@
       <workItem from="1735932322197" duration="73000" />
       <workItem from="1735932609963" duration="888000" />
       <workItem from="1742744539128" duration="1170000" />
-      <workItem from="1742745761199" duration="304000" />
+      <workItem from="1742745761199" duration="465000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -556,7 +553,23 @@
       <option name="project" value="LOCAL" />
       <updated>1735933482805</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="feat: add types for easier development">
+      <option name="closed" value="true" />
+      <created>1742746136860</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1742746136860</updated>
+    </task>
+    <task id="LOCAL-00034" summary="fix: not being able to close the presentation window after closing it before and reopening it">
+      <option name="closed" value="true" />
+      <created>1742746169702</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1742746169702</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -593,8 +606,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: local updates, update list" />
-    <MESSAGE value="chore: idea files updates" />
     <MESSAGE value="chore: update README.md" />
     <MESSAGE value="fix: merge errors, refactor" />
     <MESSAGE value="feat: FLatpak updates, use the new design" />
@@ -618,6 +629,8 @@
     <MESSAGE value="chore: add another task to do later" />
     <MESSAGE value="chore: refractor code" />
     <MESSAGE value="fix: flatpak updates version not shown correctly" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: flatpak updates version not shown correctly" />
+    <MESSAGE value="feat: add types for easier development" />
+    <MESSAGE value="fix: not being able to close the presentation window after closing it before and reopening it" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: not being able to close the presentation window after closing it before and reopening it" />
   </component>
 </project>
