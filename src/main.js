@@ -47,11 +47,14 @@ export const NyarchupdaterApplication = GObject.registerClass(
                     application_icon: 'moe.nyarchlinux.updater',
                     issue_url: 'https://github.com/NyarchLinux/NyarchUpdater/issues',
                     developer_name: 'Nyarch Linux',
-                    version: '0.1.0',
+                    version: '0.1.5',
                     developers: [
                         'Adam Billard'
                     ],
-                    copyright: '© 2024 Nyarch Linux'
+                    copyright: '© 2024 Nyarch Linux',
+                    website: "https://nyarchlinux.moe",
+                    license: "GPL-3.0-or-later",
+                    support_url: "https://discord.gg/xuw6BNXXE7"
                 };
                 const aboutWindow = new Adw.AboutWindow(aboutParams);
                 aboutWindow.present();
