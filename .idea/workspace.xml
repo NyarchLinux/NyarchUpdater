@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="chore: bump version and remove unused variable from run.sh" />
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="chore: bump version and add app details">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -121,89 +125,6 @@
     <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/EDFA0000-has-proto/package.json" />
     <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/F58F0000-colors/package.json" />
     <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/entreprise/Backup VPS - 28-10-2024/var/lib/pterodactyl/volumes/109a30e8-8a9c-4fba-9403-e1d4d665c2dd/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/disquelocal/Documents and Settings/All Users/Ableton/Live 11 Standard/Resources/Max/resources/packages/Node for Max/source/bin/npm/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/disquelocal/Documents and Settings/All Users/Ableton/Live 11 Standard/Resources/Max/resources/packages/RNBO/server/deps/@rnbo/target-base/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/disquelocal/ProgramData/Ableton/Live 11 Standard/Resources/Max/resources/packages/Node for Max/source/bin/npm/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/disquelocal/ProgramData/Ableton/Live 11 Standard/Resources/Max/resources/packages/RNBO/server/deps/@rnbo/target-base/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/disquelocal/ProgramData/Application Data/Ableton/Live 11 Standard/Resources/Max/resources/packages/Node for Max/source/bin/npm/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/disquelocal/ProgramData/Application Data/Ableton/Live 11 Standard/Resources/Max/resources/packages/RNBO/server/deps/@rnbo/target-base/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/disquelocal/Users/All Users/Ableton/Live 11 Standard/Resources/Max/resources/packages/Node for Max/source/bin/npm/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/disquelocal/Users/All Users/Ableton/Live 11 Standard/Resources/Max/resources/packages/RNBO/server/deps/@rnbo/target-base/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/Utilisateurs/Adam/Documents/dev/JavaScript/CreationServeurs/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/Utilisateurs/Adam/Documents/dev/JavaScript/NyarchUpdater/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/Utilisateurs/Adam/Documents/dev/TypeScript/site/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/E6300000-promisify/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/@electron/http-timer/verror/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/@gar/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/@malept/promisify/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/@types/wast-parser/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/babel-loader/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/cacheable-request/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/copy-webpack-plugin/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/elliptic/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/eslint-plugin-vue/espree/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/extglob/is-accessor-descriptor/has-value/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/flush-write-stream/braces/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/flush-write-stream/enhanced-resolve/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/flush-write-stream/execa/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/flush-write-stream/is-number/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/flush-write-stream/make-dir/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/flush-write-stream/ora/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/flush-write-stream/restore-cursor/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/hpack.js/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/jsprim/yallist/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/jszip/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/memory-fs/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/minipass/array-flatten/ipaddr.js/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/minizlib/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/mississippi/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/node-libs-browser/safe-buffer/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/rc/yallist/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/snapdragon-node/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/snapdragon/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/stream-browserify/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/stream-http/define-property/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/tar/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/terser/supports-color/jsesc/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/unset-value/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/url/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/util/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0278.chk/webpack/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir0294.chk/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir1545.chk/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.000/dir1594.chk/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/0B7F0000-grunt-conventional-changelog/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/2F9F0000-karma-chrome-launcher/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/3A850000-mongoose/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/53D10000-debug/supports-web-crypto/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/5D8B0000-npm-registry-fetch/are-we-there-yet/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/5EC10000-readable-stream/token/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/5F9F0000-path-to-regexp/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/6D8B0000-node-gyp/once/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/712D0000-balanced-match/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/7E8B0000-readable-stream/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/8AAC0000-setimmediate/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/97021000-@pkgjs/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/99930000-fs/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/9AAC0000-crypto-browserify/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/A2570000-array-flatten/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/AD8B0000-first-chunk-stream/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/AE470000-etag/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/BAC41000-magic-string/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/BE8B0000-tar/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/C4100000-node_modules/compression/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/C4100000-node_modules/connect-mongo/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/C4100000-node_modules/cookie-parser/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/C4100000-node_modules/debug/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/C4100000-node_modules/passport-discord-auth/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/C4100000-node_modules/util/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/C4100000-node_modules/xss/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/CAAC0000-diffie-hellman/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/CD9F0000-yocto-queue/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/E9930000-move-file/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/EDFA0000-has-proto/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/données/found.001/F58F0000-colors/package.json" />
-    <dismissed value="$PROJECT_DIR$/flatpak-app/var/run/media/adam/entreprise/Backup VPS - 28-10-2024/var/lib/pterodactyl/volumes/109a30e8-8a9c-4fba-9403-e1d4d665c2dd/package.json" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -297,6 +218,9 @@
       <workItem from="1742744539128" duration="1170000" />
       <workItem from="1742745761199" duration="465000" />
       <workItem from="1742746389610" duration="162000" />
+      <workItem from="1742748473333" duration="239000" />
+      <workItem from="1742756174859" duration="958000" />
+      <workItem from="1742762351660" duration="1579000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -578,7 +502,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742746487704</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="chore: bump version and add app details">
+      <option name="closed" value="true" />
+      <created>1742748717768</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1742748717768</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -615,7 +547,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix: merge errors, refactor" />
     <MESSAGE value="feat: FLatpak updates, use the new design" />
     <MESSAGE value="refractor: clean up the code, finish making the updates system work" />
     <MESSAGE value="feat: make the update button work for arch updates" />
@@ -640,6 +571,7 @@
     <MESSAGE value="feat: add types for easier development" />
     <MESSAGE value="fix: not being able to close the presentation window after closing it before and reopening it" />
     <MESSAGE value="chore: bump version and remove unused variable from run.sh" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: bump version and remove unused variable from run.sh" />
+    <MESSAGE value="chore: bump version and add app details" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: bump version and add app details" />
   </component>
 </project>

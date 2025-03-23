@@ -27,6 +27,7 @@ import { NyarchupdaterWindow } from './window.js';
 pkg.initGettext();
 pkg.initFormat();
 
+
 export const NyarchupdaterApplication = GObject.registerClass(
     class NyarchupdaterApplication extends Adw.Application {
         constructor() {
@@ -39,6 +40,8 @@ export const NyarchupdaterApplication = GObject.registerClass(
             this.add_action(quitAction);
             this.set_accels_for_action('app.quit', ['<primary>q']);
 
+            this.set_version("0.1.5");
+
             const showAboutAction = new Gio.SimpleAction({name: 'about'});
             showAboutAction.connect('activate', () => {
                 const aboutParams = {
@@ -47,7 +50,7 @@ export const NyarchupdaterApplication = GObject.registerClass(
                     application_icon: 'moe.nyarchlinux.updater',
                     issue_url: 'https://github.com/NyarchLinux/NyarchUpdater/issues',
                     developer_name: 'Nyarch Linux',
-                    version: '0.1.5',
+                    version: this.version,
                     developers: [
                         'Adam Billard'
                     ],

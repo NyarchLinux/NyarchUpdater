@@ -262,6 +262,10 @@ export const NyarchupdaterWindow = GObject.registerClass({
         box.set_center_widget(loadingLabel);
         this._refresh_button.set_child(box);
         spinner.start();
+        await this.fetchAppUpdates().catch((err) => {
+            log("Error fetching app updates");
+            log(err)
+        });
         const errors = [false, false, false];
         const localUpdatesPromise = this.fetchLocalUpdates().catch(() => {
             this.resetButton(box, spinner);
@@ -420,6 +424,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
                     method: "GET",
                     uri: GLib.uri_parse(url, GLib.UriFlags.NONE)
                 });
+                message.request_headers.append('User-Agent', 'GJS-Soup-Client/1.0');
                 session.send_and_read_async(
                     message,
                     GLib.PRIORITY_DEFAULT,
@@ -429,7 +434,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
                             let bytes = session.send_and_read_finish(result);
                             resolve(bytes);
                         } else {
-                            reject();
+                            reject(message.get_status());
                         }
                     }
                 );
@@ -458,15 +463,52 @@ export const NyarchupdaterWindow = GObject.registerClass({
         });
     }
 
-    createDialog(title, message) {
+    createDialog(title, message, options = []) {
         const dialog = Adw.AlertDialog.new(title, null);
         dialog.set_body(message);
         dialog.add_response("close", "_Close");
         dialog.set_default_response("close");
         dialog.set_close_response("close");
-        dialog.connect("response", () => {
-            dialog.close();
+        if (options.length) {
+            for (const option of options) {
+                dialog.add_response(option.responseId, option.responseLabel);
+            }
+        }
+        dialog.connect("response", (_source, response) => {
+            if (options.length) {
+                for (const option of options) {
+                    if (response === option.responseId) option.callback();
+                }
+            }
+            if (response === "close") dialog.close();
         });
         dialog.present(dialog);
+    }
+
+    async fetchAppUpdates() {
+        log("Fetching app updates");
+        const res = await this.fetch("https://api.github.com/repos/NyarchLinux/NyarchUpdater/releases/latest");
+        //compare the version with the current version
+        const currentVersion = this.application.version;
+        const latestVersion = res.tag_name;
+        if (currentVersion !== latestVersion) {
+            this.createDialog("Nyarch Updater Update", `A new version of Nyarch Updater is available: ${latestVersion}`, [{
+                responseId: "update",
+                responseLabel: "Update",
+                callback: () => {
+                    this.spawnv([
+                        'flatpak-spawn',
+                        '--host',
+                        'gnome-terminal',
+                        '--',
+                        'bash',
+                        '-c',
+                        `cd /tmp && wget https://github.com/nyarchlinux/nyarchupdater/releases/latest/download/nyarchupdater.flatpak && flatpak install nyarchupdater.flatpak`
+                    ]);
+                }
+            }]);
+        } else {
+            this.setState("nyarch", "success");
+        }
     }
 });
