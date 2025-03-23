@@ -80,7 +80,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
      * @returns {Promise<boolean>}
      */
     checkSign() {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve) => {
             const command = `rm -rf ${this.configDir}/cache && mkdir -p ${this.configDir}/cache && cd ${this.configDir}/cache && wget -T 5 -t 1 https://nyarchlinux.moe/update.json && wget -T 5 -t 1 https://nyarchlinux.moe/update.json.sig && gpg --verify update.json.sig update.json`
             const stdout = await this.spawnv(['bash', '-c', command]).catch(() => {
                 resolve(false);
@@ -452,6 +452,10 @@ export const NyarchupdaterWindow = GObject.registerClass({
         if (!this.window) this.window = new PresentationWindow(this.application, this);
         const window = this.window;
         window.present();
+        window.connect("close-request", () => {
+            window.close();
+            this.window = null;
+        });
     }
 
     createDialog(title, message) {
