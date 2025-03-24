@@ -42,7 +42,7 @@ export const NyarchupdaterApplication = GObject.registerClass(
 
             this.set_version("0.1.7");
 
-            const showAboutAction = new Gio.SimpleAction({name: 'about'});
+            const showAboutAction = new Gio.SimpleAction({ name: 'about' });
             showAboutAction.connect('activate', () => {
                 const aboutParams = {
                     transient_for: this.active_window,
@@ -54,7 +54,7 @@ export const NyarchupdaterApplication = GObject.registerClass(
                     developers: [
                         'Adam Billard'
                     ],
-                    copyright: '© 2024 Nyarch Linux',
+                    copyright: '© 2025 Nyarch Linux',
                     website: "https://nyarchlinux.moe",
                     license: "GPL-3.0-or-later",
                     support_url: "https://discord.gg/xuw6BNXXE7"
