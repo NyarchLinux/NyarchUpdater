@@ -62,6 +62,7 @@ export const NyarchupdaterApplication = GObject.registerClass(
                 const aboutWindow = new Adw.AboutWindow(aboutParams);
                 aboutWindow.present();
             });
+
             this.add_action(showAboutAction);
         }
 
