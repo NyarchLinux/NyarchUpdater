@@ -262,10 +262,6 @@ export const NyarchupdaterWindow = GObject.registerClass({
         box.set_center_widget(loadingLabel);
         this._refresh_button.set_child(box);
         spinner.start();
-        await this.fetchAppUpdates().catch((err) => {
-            log("Error fetching app updates");
-            log(err)
-        });
         const errors = [false, false, false];
         const localUpdatesPromise = this.fetchLocalUpdates().catch(() => {
             this.resetButton(box, spinner);
@@ -287,6 +283,10 @@ export const NyarchupdaterWindow = GObject.registerClass({
         spinner.stop();
         box.set_center_widget(doneLabel);
         this.updateWindow(localUpdates, endpointUpdates, flatpakUpdates, errors).catch(this.handleError.bind(this));
+        await this.fetchAppUpdates().catch((err) => {
+            log("Error fetching app updates");
+            log(err)
+        });
     }
 
     /**
