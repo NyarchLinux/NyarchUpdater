@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="chore: bump version and add app details">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
-    </list>
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: add update checker" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -220,7 +216,7 @@
       <workItem from="1742746389610" duration="162000" />
       <workItem from="1742748473333" duration="239000" />
       <workItem from="1742756174859" duration="958000" />
-      <workItem from="1742762351660" duration="1579000" />
+      <workItem from="1742762351660" duration="1697000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -510,7 +506,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742748717768</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="feat: add update checker">
+      <option name="closed" value="true" />
+      <created>1742764054425</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1742764054425</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -547,7 +551,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: FLatpak updates, use the new design" />
     <MESSAGE value="refractor: clean up the code, finish making the updates system work" />
     <MESSAGE value="feat: make the update button work for arch updates" />
     <MESSAGE value="feat: proper error handling, arch updates" />
@@ -572,6 +575,7 @@
     <MESSAGE value="fix: not being able to close the presentation window after closing it before and reopening it" />
     <MESSAGE value="chore: bump version and remove unused variable from run.sh" />
     <MESSAGE value="chore: bump version and add app details" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: bump version and add app details" />
+    <MESSAGE value="feat: add update checker" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add update checker" />
   </component>
 </project>
