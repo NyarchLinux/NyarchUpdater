@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: add update checker" />
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: add Soup to the types">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -217,6 +219,8 @@
       <workItem from="1742748473333" duration="239000" />
       <workItem from="1742756174859" duration="958000" />
       <workItem from="1742762351660" duration="1697000" />
+      <workItem from="1742841865008" duration="225000" />
+      <workItem from="1742843945406" duration="79000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -514,7 +518,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742764054425</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="feat: add Soup to the types">
+      <option name="closed" value="true" />
+      <created>1742842022785</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1742842022785</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -551,7 +563,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refractor: clean up the code, finish making the updates system work" />
     <MESSAGE value="feat: make the update button work for arch updates" />
     <MESSAGE value="feat: proper error handling, arch updates" />
     <MESSAGE value="feat: add flatpak updates" />
@@ -576,6 +587,7 @@
     <MESSAGE value="chore: bump version and remove unused variable from run.sh" />
     <MESSAGE value="chore: bump version and add app details" />
     <MESSAGE value="feat: add update checker" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add update checker" />
+    <MESSAGE value="feat: add Soup to the types" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add Soup to the types" />
   </component>
 </project>
