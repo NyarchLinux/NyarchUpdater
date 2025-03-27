@@ -26,7 +26,7 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
 
 import { PresentationWindow } from './presentation.js';
-import { stackLog } from './utils.js';
+import { stackLog, compareVersions } from './utils.js';
 
 export const NyarchupdaterWindow = GObject.registerClass({
     GTypeName: 'NyarchupdaterWindow',
@@ -488,27 +488,24 @@ export const NyarchupdaterWindow = GObject.registerClass({
     async fetchAppUpdates() {
         log("Fetching app updates");
         const res = await this.fetch("https://api.github.com/repos/NyarchLinux/NyarchUpdater/releases/latest");
-        //compare the version with the current version
         const currentVersion = this.application.version;
         const latestVersion = res.tag_name;
-        if (currentVersion !== latestVersion) {
-            this.createDialog("Nyarch Updater Update", `A new version of Nyarch Updater is available: ${latestVersion}`, [{
-                responseId: "update",
-                responseLabel: "Update",
-                callback: () => {
-                    this.spawnv([
-                        'flatpak-spawn',
-                        '--host',
-                        'gnome-terminal',
-                        '--',
-                        'bash',
-                        '-c',
-                        `cd /tmp && wget https://github.com/nyarchlinux/nyarchupdater/releases/latest/download/nyarchupdater.flatpak && flatpak install nyarchupdater.flatpak`
-                    ]);
-                }
-            }]);
-        } else {
-            this.setState("nyarch", "success");
-        }
+        if (compareVersions(currentVersion, latestVersion) !== 1) return;
+
+        this.createDialog("Nyarch Updater Update", `A new version of Nyarch Updater is available: ${latestVersion}`, [{
+            responseId: "update",
+            responseLabel: "Update",
+            callback: () => {
+                this.spawnv([
+                    'flatpak-spawn',
+                    '--host',
+                    'gnome-terminal',
+                    '--',
+                    'bash',
+                    '-c',
+                    `cd /tmp && wget https://github.com/nyarchlinux/nyarchupdater/releases/latest/download/nyarchupdater.flatpak && flatpak install nyarchupdater.flatpak`
+                ]);
+            }
+        }]);
     }
 });
