@@ -20,7 +20,13 @@ Why the hell do you wanna use Nyarch Updater on windows?
 
 ### Flatpak
 
-You can install Nyarch Updater via Flatpak. It should be pre-installed from Nyarch installation.
+You can install Nyarch Updater via Flatpak. It should be pre-installed from Nyarch installation. Otherwise, you can run these commands:
+
+```bash
+cd /tmp
+wget https://github.com/nyarchlinux/nyarchupdater/releases/latest/download/nyarchupdater.flatpak
+flatpak install nyarchupdater.flatpak
+```
 
 ### Manual
 
