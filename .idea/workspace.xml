@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="chore: update copyright">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
-    </list>
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: better version checking" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -227,7 +224,7 @@
       <workItem from="1742845821314" duration="94000" />
       <workItem from="1742845936915" duration="52000" />
       <workItem from="1742846375844" duration="48000" />
-      <workItem from="1743106815641" duration="301000" />
+      <workItem from="1743106815641" duration="331000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -573,7 +570,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742846428815</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="feat: better version checking">
+      <option name="closed" value="true" />
+      <created>1743107146733</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1743107146733</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -610,7 +615,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix: icons" />
     <MESSAGE value="feat: add nyarch release updates" />
     <MESSAGE value="refractor: remove unused pages.js" />
     <MESSAGE value="fix: some issues with the command execution, add an install script" />
@@ -635,6 +639,7 @@
     <MESSAGE value="refactor: fetch app updates after everything" />
     <MESSAGE value="chore: bump versions" />
     <MESSAGE value="chore: update copyright" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: update copyright" />
+    <MESSAGE value="feat: better version checking" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: better version checking" />
   </component>
 </project>

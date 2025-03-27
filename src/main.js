@@ -40,7 +40,7 @@ export const NyarchupdaterApplication = GObject.registerClass(
             this.add_action(quitAction);
             this.set_accels_for_action('app.quit', ['<primary>q']);
 
-            this.set_version("0.1.7");
+            this.set_version("0.1.8");
 
             const showAboutAction = new Gio.SimpleAction({ name: 'about' });
             showAboutAction.connect('activate', () => {
