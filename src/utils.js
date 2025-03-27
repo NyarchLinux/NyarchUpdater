@@ -43,3 +43,26 @@ export function stackLog(type, ...args) {
     }
     console[type](...args, '\n', `  at ${initiator}`);
 }
+
+/**
+ * Compare two version strings
+ * @param old The old version string
+ * @param newer The new version string
+ * @returns {number} -1 if the old version is greater, 1 if the new version is greater, 0 if they are equal
+ */
+export function compareVersions(old, newer) {
+    const oldParts = old.split('.').map(Number);
+    const newParts = newer.split('.').map(Number);
+
+    for (let i = 0; i < Math.max(oldParts.length, newParts.length); i++) {
+        const oldPart = oldParts[i] || 0;
+        const newPart = newParts[i] || 0;
+
+        if (oldPart > newPart) {
+            return -1;
+        } else if (oldPart < newPart) {
+            return 1;
+        }
+    }
+    return 0;
+}
