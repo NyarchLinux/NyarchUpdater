@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="chore: bump version">
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: update run script to uninstall the app on the user">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/presentation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/presentation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +23,7 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="master" />
@@ -122,7 +126,6 @@
     <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/E9930000-move-file/package.json" />
     <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/EDFA0000-has-proto/package.json" />
     <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/données/found.001/F58F0000-colors/package.json" />
-    <dismissed value="$PROJECT_DIR$/.flatpak-builder/cache/objects/54/2b14975bb28ba3a0b02b1145c19f9a4ee911e95e586e3b6897687530139e5f.file/media/adam/entreprise/Backup VPS - 28-10-2024/var/lib/pterodactyl/volumes/109a30e8-8a9c-4fba-9403-e1d4d665c2dd/package.json" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -178,7 +181,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-WS-243.26053.12" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-WS-251.26927.40" />
       </set>
     </attachedChunks>
   </component>
@@ -228,7 +231,9 @@
       <workItem from="1742846375844" duration="48000" />
       <workItem from="1743106815641" duration="331000" />
       <workItem from="1743107186974" duration="136000" />
-      <workItem from="1743263820094" duration="636000" />
+      <workItem from="1743263820094" duration="1174000" />
+      <workItem from="1744208319144" duration="266000" />
+      <workItem from="1751570032193" duration="1377000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -598,7 +603,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743107323418</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="feat: update run script to uninstall the app on the user">
+      <option name="closed" value="true" />
+      <created>1743270930192</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1743270930192</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -635,7 +648,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refractor: remove unused pages.js" />
     <MESSAGE value="fix: some issues with the command execution, add an install script" />
     <MESSAGE value="fix: version format" />
     <MESSAGE value="fix: error while opening presentation window&#10;&#10;JS ERROR: Error: Argument to the constructor of PresentationWindow should be a plain JS object with properties to set&#10;_init/Gtk.Widget.prototype._init@resource:///org/gnome/gjs/modules/core/overrides/Gtk.js:39:56&#10;PresentationWindow@resource:///moe/nyarchlinux/updater/js/presentation.js:35:9&#10;updateNyarch@resource:///moe/nyarchlinux/updater/js/window.js:372:41&#10;init/&lt;@resource:///moe/nyarchlinux/updater/js/window.js:232:24&#10;_init/GLib.MainLoop.prototype.runAsync/&lt;/&lt;@resource:///org/gnome/gjs/modules/core/overrides/GLib.js:263:34" />
@@ -660,6 +672,7 @@
     <MESSAGE value="feat: better version checking" />
     <MESSAGE value="feat: version check function" />
     <MESSAGE value="chore: bump version" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: bump version" />
+    <MESSAGE value="feat: update run script to uninstall the app on the user" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: update run script to uninstall the app on the user" />
   </component>
 </project>

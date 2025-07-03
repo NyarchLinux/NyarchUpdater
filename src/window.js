@@ -198,7 +198,6 @@ export const NyarchupdaterWindow = GObject.registerClass({
             // Name             Application ID   Version  Branch Installation
             // org.kde.kdenlive org.kde.kdenlive 21.08.2  stable system
             const match = line.match(/^(\S+)\s+(.+?)\s+(\S+)\s+(\S+)\s+(\S+)$/);
-            console.log(match)
             if (match) {
                 updateList.push({
                     name: match[0].split("\t")[0],
@@ -385,7 +384,7 @@ export const NyarchupdaterWindow = GObject.registerClass({
         this.setState("flatpak", "error", "An error occurred");
         this.setState("nyarch", "error", "An error occurred");
 
-        this.createDialog("An error occurred", `Oopsie, an error occured during the update check! \nError message: ${error.message}`);
+        this.createDialog("An error occurred", `Oopsie, an error occurred during the update check! \nError message: ${error.message}`);
 
         logError(error);
     }
@@ -507,5 +506,10 @@ export const NyarchupdaterWindow = GObject.registerClass({
                 ]);
             }
         }]);
+    }
+
+    async installAlbertIfNotPresent() {
+        log("checking if albert is installed")
+        
     }
 });

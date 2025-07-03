@@ -78,5 +78,8 @@ export const NyarchupdaterApplication = GObject.registerClass(
 
 export function main(argv) {
     const application = new NyarchupdaterApplication();
-    return application.runAsync(argv).catch(logError);
+    return application.runAsync(argv).catch((err) => {
+        console.error('Failed to run the application:', err);
+        return 1; // Return a non-zero exit code on error
+    });
 }

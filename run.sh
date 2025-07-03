@@ -16,6 +16,7 @@ flatpak-builder --install --user --force-clean flatpak-app "$APPID".json
 git reset --soft HEAD~1
 
 # Run the flatpak application
+SHELL_DEBUG=all
 flatpak run $APPID
 
 # Call the cleanup function after the flatpak application exits

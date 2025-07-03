@@ -197,7 +197,7 @@ export const PresentationWindow = GObject.registerClass({
     async onButtonClick(button) {
         const command = this.commands[button];
         if (!command) {
-          log("Error: undefined");
+          log("Error: no command found for button", button);
           return;
         }
         if (command === 'skip') {
