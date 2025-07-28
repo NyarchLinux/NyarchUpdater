@@ -241,6 +241,10 @@
         <attribute name="action">win.show-help-overlay</attribute>
       </item>
       <item>
+        <attribute name="label" translatable="yes">_Common Issues &amp; FAQ</attribute>
+        <attribute name="action">app.faq</attribute>
+      </item>
+      <item>
         <attribute name="label" translatable="yes">_About NyarchUpdater</attribute>
         <attribute name="action">app.about</attribute>
       </item>

@@ -33,7 +33,7 @@ export const NyarchupdaterApplication = GObject.registerClass(
         constructor() {
             super({ application_id: 'moe.nyarchlinux.updater', flags: Gio.ApplicationFlags.DEFAULT_FLAGS });
 
-            const quitAction = new Gio.SimpleAction({name: 'quit'});
+            const quitAction = new Gio.SimpleAction({ name: 'quit' });
                 quitAction.connect('activate', () => {
                 this.quit();
             });
@@ -63,7 +63,14 @@ export const NyarchupdaterApplication = GObject.registerClass(
                 aboutWindow.present();
             });
 
+            const faqAction = new Gio.SimpleAction({ name: 'faq' });
+            faqAction.connect('activate', () => {
+                // new window from faq.ui file
+                console.log("eee")
+            });
+
             this.add_action(showAboutAction);
+            this.add_action(faqAction);
         }
 
         vfunc_activate() {

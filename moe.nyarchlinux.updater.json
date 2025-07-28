@@ -3,7 +3,7 @@
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "48",
     "sdk" : "org.gnome.Sdk",
-    "command" : "moe.nyarchlinux.updater",
+    "command" : "nyarchupdater",
     "finish-args" : [
         "--share=network",
         "--share=ipc",
