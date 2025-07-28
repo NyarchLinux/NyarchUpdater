@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0"/>
+    <requires lib="Adw" version="1.0"/>
+    <template class="FAQWindow" parent="AdwApplicationWindow">
+        <property name="width-request">400</property>
+        <property name="default-height">600</property>
+        <property name="title">FAQ &amp; Common Issues</property>
+        <property name="content">
+            <object class="AdwToolbarView">
+                <child type="top">
+                    <object class="AdwHeaderBar" id="header_bar">
+                        <child type="end">
+                            <object class="GtkMenuButton">
+                                <property name="primary">True</property>
+                                <property name="icon-name">open-menu-symbolic</property>
+                                <property name="tooltip-text" translatable="yes">Menu</property>
+                                <property name="menu-model">primary_menu</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+                <property name="content">
+                    <object class="GtkScrolledWindow">
+                        <property name="hscrollbar-policy">never</property>
+                        <property name="vscrollbar-policy">automatic</property>
+                        <property name="child">
+                            <object class="AdwClamp">
+                                <property name="maximum-size">550</property>
+                                <property name="child">
+                                    <object class="GtkBox">
+                                        <property name="orientation">vertical</property>
+                                        <property name="spacing">20</property>
+                                        <property name="margin-top">24</property>
+                                        <property name="margin-bottom">24</property>
+                                        <property name="margin-start">20</property>
+                                        <property name="margin-end">20</property>
+                                        <child>
+                                            <object class="GtkLabel">
+                                                <property name="label">FAQ &amp; Common Issues</property>
+                                                <property name="halign">start</property>
+                                                <style>
+                                                    <class name="title-1"/>
+                                                </style>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkBox">
+                                                <property name="orientation">vertical</property>
+                                                <property name="spacing">8</property>
+                                                <child>
+                                                    <object class="GtkLabel">
+                                                        <property name="label">What is this app?</property>
+                                                        <property name="halign">start</property>
+                                                        <property name="wrap">true</property>
+                                                        <property name="xalign">0</property>
+                                                        <style>
+                                                            <class name="title-3"/>
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                                <child>
+                                                    <object class="GtkLabel">
+                                                        <property name="label">Nyarch Updater is a utility application designed to help you keep your system up to date! It allows package updates, flatpak updates, and most importantly, Nyarch release updates.</property>
+                                                        <property name="halign">start</property>
+                                                        <property name="wrap">true</property>
+                                                        <property name="xalign">0</property>
+                                                        <style>
+                                                            <class name="body"/>
+                                                            <class name="dim-label"/>
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkBox">
+                                                <property name="orientation">vertical</property>
+                                                <property name="spacing">8</property>
+                                                <child>
+                                                    <object class="GtkLabel">
+                                                        <property name="label">Clicking buttons such as "execute command" or "show commands" does nothing</property>
+                                                        <property name="halign">start</property>
+                                                        <property name="wrap">true</property>
+                                                        <property name="xalign">0</property>
+                                                        <style>
+                                                            <class name="title-3"/>
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                                <child>
+                                                    <object class="GtkLabel">
+                                                        <property name="label">This is a known issue that we are trying to fix. In the meantime, restarting the app should make it work. I would say: restart it until it works, and until we fix it.</property>
+                                                        <property name="halign">start</property>
+                                                        <property name="wrap">true</property>
+                                                        <property name="xalign">0</property>
+                                                        <style>
+                                                            <class name="body"/>
+                                                            <class name="dim-label"/>
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkBox">
+                                                <property name="orientation">vertical</property>
+                                                <property name="spacing">8</property>
+                                                <child>
+                                                    <object class="GtkLabel">
+                                                        <property name="label">Executing a command did nothing</property>
+                                                        <property name="halign">start</property>
+                                                        <property name="wrap">true</property>
+                                                        <property name="xalign">0</property>
+                                                        <style>
+                                                            <class name="title-3"/>
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                                <child>
+                                                    <object class="GtkLabel">
+                                                        <property name="label">Something went wrong here. Click "show command" and execute it yourself. If it persists, please report it in the Discord or the Github.</property>
+                                                        <property name="halign">start</property>
+                                                        <property name="wrap">true</property>
+                                                        <property name="xalign">0</property>
+                                                        <style>
+                                                            <class name="body"/>
+                                                            <class name="dim-label"/>
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkBox">
+                                                <property name="orientation">vertical</property>
+                                                <property name="spacing">8</property>
+                                                <child>
+                                                    <object class="GtkLabel">
+                                                        <property name="label">The application keeps asking me to update my release even though I did all the steps</property>
+                                                        <property name="halign">start</property>
+                                                        <property name="wrap">true</property>
+                                                        <property name="xalign">0</property>
+                                                        <style>
+                                                            <class name="title-3"/>
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                                <child>
+                                                    <object class="GtkLabel">
+                                                        <property name="label">Something went wrong here, again. Don't worry, it's probably not your fault! Check if you didn't skip the "update version file" step! If you didn't and it still does not work, copy the command shown with "Show Command", and run it after finishing the steps on your preferred terminal emulator. Then restart updater to see the changes!</property>
+                                                        <property name="halign">start</property>
+                                                        <property name="wrap">true</property>
+                                                        <property name="xalign">0</property>
+                                                        <style>
+                                                            <class name="body"/>
+                                                            <class name="dim-label"/>
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </property>
+                            </object>
+                        </property>
+                    </object>
+                </property>
+            </object>
+        </property>
+    </template>
+    <menu id="primary_menu">
+        <section>
+            <item>
+                <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
+                <attribute name="action">win.show-help-overlay</attribute>
+            </item>
+            <item>
+                <attribute name="label" translatable="yes">_Common Issues &amp; FAQ</attribute>
+                <attribute name="action">app.faq</attribute>
+            </item>
+            <item>
+                <attribute name="label" translatable="yes">_About NyarchUpdater</attribute>
+                <attribute name="action">app.about</attribute>
+            </item>
+        </section>
+    </menu>
+</interface>

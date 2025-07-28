@@ -4,10 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: update run script to uninstall the app on the user">
+    <list default="true" id="74d41188-712d-4a96-813e-cd56fb3e4c62" name="Changes" comment="feat: add an FAQ &amp; Common Issues page">
+      <change afterPath="$PROJECT_DIR$/src/faq.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/faq.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meson.build" beforeDir="false" afterPath="$PROJECT_DIR$/meson.build" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/moe.nyarchlinux.updater.json" beforeDir="false" afterPath="$PROJECT_DIR$/moe.nyarchlinux.updater.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.data.gresource.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.data.gresource.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.src.gresource.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/moe.nyarchlinux.updater.src.gresource.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nyarchupdater.data.gresource.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/nyarchupdater.data.gresource.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/presentation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/presentation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/window.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -147,16 +156,17 @@
     &quot;Node.js.window.js.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;SHELLCHECK.PATH&quot;: &quot;/home/adam/.local/share/JetBrains/WebStorm2024.3/Shell Script/shellcheck&quot;,
     &quot;Shell Script.run.sh.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/adam/Projets/NyarchUpdater/run.sh&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/run/media/adam/données/Utilisateurs/Adam/Documents/dev/TypeScript/nekoview&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/home/adam/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -233,7 +243,13 @@
       <workItem from="1743107186974" duration="136000" />
       <workItem from="1743263820094" duration="1174000" />
       <workItem from="1744208319144" duration="266000" />
-      <workItem from="1751570032193" duration="1377000" />
+      <workItem from="1751570032193" duration="1737000" />
+      <workItem from="1753628339394" duration="56000" />
+      <workItem from="1753628546887" duration="932000" />
+      <workItem from="1753631013784" duration="10000" />
+      <workItem from="1753631292333" duration="861000" />
+      <workItem from="1753728904804" duration="287000" />
+      <workItem from="1753731558913" duration="1372000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -611,7 +627,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743270930192</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="feat: easier debugging">
+      <option name="closed" value="true" />
+      <created>1751571825947</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1751571825947</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -648,7 +672,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix: some issues with the command execution, add an install script" />
     <MESSAGE value="fix: version format" />
     <MESSAGE value="fix: error while opening presentation window&#10;&#10;JS ERROR: Error: Argument to the constructor of PresentationWindow should be a plain JS object with properties to set&#10;_init/Gtk.Widget.prototype._init@resource:///org/gnome/gjs/modules/core/overrides/Gtk.js:39:56&#10;PresentationWindow@resource:///moe/nyarchlinux/updater/js/presentation.js:35:9&#10;updateNyarch@resource:///moe/nyarchlinux/updater/js/window.js:372:41&#10;init/&lt;@resource:///moe/nyarchlinux/updater/js/window.js:232:24&#10;_init/GLib.MainLoop.prototype.runAsync/&lt;/&lt;@resource:///org/gnome/gjs/modules/core/overrides/GLib.js:263:34" />
     <MESSAGE value="feat: implementation of the shown_command property" />
@@ -673,6 +696,7 @@
     <MESSAGE value="feat: version check function" />
     <MESSAGE value="chore: bump version" />
     <MESSAGE value="feat: update run script to uninstall the app on the user" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: update run script to uninstall the app on the user" />
+    <MESSAGE value="feat: easier debugging" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: easier debugging" />
   </component>
 </project>

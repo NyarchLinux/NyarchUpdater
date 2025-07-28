@@ -6,5 +6,6 @@
     <file>presentation.js</file>
     <file>../data/public.asc</file>
     <file>utils.js</file>
+    <file>faq.js</file>
   </gresource>
 </gresources>

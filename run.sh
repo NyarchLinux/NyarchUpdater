@@ -1,14 +1,22 @@
 #!/bin/bash
 APPID="moe.nyarchlinux.updater"
-BUILD_DIR="flatpak-app"
-MANIFEST="$APPID.json"
+
+# Function to handle cleanup
+cleanup() {
+    echo "Cleaning up..."
+    flatpak remove --user $APPID --noninteractive --delete-data
+}
+
+# Trap SIGINT (Ctrl + C) and call the cleanup function
+trap 'cleanup; exit' SIGINT
 
 git add *
 git commit -m "test"
-
-SHELL_DEBUG=all
-echo "Building $APPID"
-flatpak-builder --force-clean --user "$BUILD_DIR" "$MANIFEST"
-echo "Running $APPID"
-flatpak-builder --run "$BUILD_DIR" "$APPID.json" "$APPID"
+flatpak-builder --install --user --force-clean flatpak-app "$APPID".json
 git reset --soft HEAD~1
+
+# Run the flatpak application
+flatpak run $APPID
+
+# Call the cleanup function after the flatpak application exits
+cleanup

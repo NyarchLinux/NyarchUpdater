@@ -1,6 +1,6 @@
 /* main.js
  *
- * Copyright 2024 Nyarch Linux
+ * Copyright 2025 Nyarch Linux
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ import Gio from 'gi://Gio';
 import Adw from 'gi://Adw?version=1';
 
 import { NyarchupdaterWindow } from './window.js';
+import { FAQWindow } from "./faq.js";
 
 pkg.initGettext();
 pkg.initFormat();
@@ -33,6 +34,8 @@ export const NyarchupdaterApplication = GObject.registerClass(
         constructor() {
             super({ application_id: 'moe.nyarchlinux.updater', flags: Gio.ApplicationFlags.DEFAULT_FLAGS });
 
+            this.faqWindow = null;
+
             const quitAction = new Gio.SimpleAction({ name: 'quit' });
                 quitAction.connect('activate', () => {
                 this.quit();
@@ -40,7 +43,7 @@ export const NyarchupdaterApplication = GObject.registerClass(
             this.add_action(quitAction);
             this.set_accels_for_action('app.quit', ['<primary>q']);
 
-            this.set_version("0.1.9");
+            this.set_version("0.1.10");
 
             const showAboutAction = new Gio.SimpleAction({ name: 'about' });
             showAboutAction.connect('activate', () => {
@@ -65,8 +68,14 @@ export const NyarchupdaterApplication = GObject.registerClass(
 
             const faqAction = new Gio.SimpleAction({ name: 'faq' });
             faqAction.connect('activate', () => {
-                // new window from faq.ui file
-                console.log("eee")
+                if (!this.faqWindow) {
+                    this.faqWindow = new FAQWindow(this);
+                }
+                this.faqWindow.present();
+
+                this.faqWindow.connect('close-request', () => {
+                    this.faqWindow = null; // Clear the reference when the window is closed
+                });
             });
 
             this.add_action(showAboutAction);

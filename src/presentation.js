@@ -1,6 +1,6 @@
-/* window.js
+/* presentation.js
  *
- * Copyright 2024 Nyarch Linux
+ * Copyright 2025 Nyarch Linux
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@ import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk?version=4.0';
 import GtkPixbuf from 'gi://GdkPixbuf';
 
-// TODO fix the error when you close the window, open it again and try to close it again
 export const PresentationWindow = GObject.registerClass({
     GTypeName: 'PresentationWindow',
     Template: 'resource:///moe/nyarchlinux/updater/presentation.ui',

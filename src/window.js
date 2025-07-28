@@ -1,6 +1,6 @@
 /* window.js
  *
- * Copyright 2024 Nyarch Linux
+ * Copyright 2025 Nyarch Linux
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
