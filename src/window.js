@@ -72,7 +72,8 @@ export const NyarchupdaterWindow = GObject.registerClass({
      * Used to import the public key
      */
     async importKey() {
-        const command = `gpg --import /app/data/public.asc`
+        const gpgPath = GLib.file_test('/app/data/public.asc', 1) ? '/app/data/public.asc' : '/usr/share/nyarchupdater/public.asc';
+        const command = `gpg --import ${gpgPath}`
         await this.spawnv(['bash', '-c', command]).catch(this.handleError.bind(this));
     }
     /**

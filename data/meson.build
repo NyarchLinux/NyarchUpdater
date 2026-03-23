@@ -33,4 +33,8 @@ test('Validate schema file',
      compile_schemas,
      args: ['--strict', '--dry-run', meson.current_source_dir()])
 
+install_data('public.asc',
+  install_dir: get_option('datadir') / meson.project_name()
+)
+
 subdir('icons')
