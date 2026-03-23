@@ -26,7 +26,7 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
 
 import { PresentationWindow } from './presentation.js';
-import { stackLog, compareVersions } from './utils.js';
+import { stackLog, compareVersions, get_spawn_command } from './utils.js';
 
 export const NyarchupdaterWindow = GObject.registerClass({
     GTypeName: 'NyarchupdaterWindow',
@@ -153,7 +153,8 @@ export const NyarchupdaterWindow = GObject.registerClass({
      * @returns {Promise<Array<ArchUpdatePackageInfo>>}
      */
     async fetchLocalUpdates() {
-        const stdout = await this.spawnv(['flatpak-spawn', '--host', 'bash', '-c', '/usr/bin/checkupdates']).catch(() => {
+        const spawn_cmd = get_spawn_command();
+        const stdout = await this.spawnv([...spawn_cmd, 'bash', '-c', '/usr/bin/checkupdates']).catch(() => {
             reject(null);
         });
         if (!stdout) {
@@ -187,7 +188,8 @@ export const NyarchupdaterWindow = GObject.registerClass({
      * @returns {Promise<Array<FlatpakUpdatePackageInfo>>}
      */
     async fetchFlatpakUpdates() {
-        const stdout = await this.spawnv(['flatpak-spawn', '--host', 'bash', '-c', "flatpak remote-ls --updates"]);
+        const spawn_cmd = get_spawn_command();
+        const stdout = await this.spawnv([...spawn_cmd, 'bash', '-c', "flatpak remote-ls --updates"]);
         if (!stdout) {
             return [];
         }
@@ -444,12 +446,13 @@ export const NyarchupdaterWindow = GObject.registerClass({
     }
 
     async updateArch() {
-        // gnome-terminal -- /bin/sh -c \"sudo pacman -Syu ; echo Done - Press enter to exit; read _\" command
-        await this.launcher.spawnv(['flatpak-spawn', '--host', 'gnome-terminal', '--', 'bash', '-c', "sudo pacman -Syu ; echo Done - Press enter to exit; read _"]);
+        const spawn_cmd = get_spawn_command();
+        await this.launcher.spawnv([...spawn_cmd, 'gnome-terminal', '--', 'bash', '-c', "sudo pacman -Syu ; echo Done - Press enter to exit; read _"]);
     }
 
     async updateFlatpak() {
-        await this.launcher.spawnv(['flatpak-spawn', '--host', 'gnome-terminal', '--', 'bash', '-c', "sudo flatpak update ; echo Done - Press enter to exit; read _"]);
+        const spawn_cmd = get_spawn_command();
+        await this.launcher.spawnv([...spawn_cmd, 'gnome-terminal', '--', 'bash', '-c', "sudo flatpak update ; echo Done - Press enter to exit; read _"]);
     }
 
     async updateNyarch() {
@@ -495,9 +498,9 @@ export const NyarchupdaterWindow = GObject.registerClass({
             responseId: "update",
             responseLabel: "Update",
             callback: () => {
+                const spawn_cmd = get_spawn_command();
                 this.spawnv([
-                    'flatpak-spawn',
-                    '--host',
+                    ...spawn_cmd,
                     'gnome-terminal',
                     '--',
                     'bash',

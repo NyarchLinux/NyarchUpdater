@@ -23,6 +23,8 @@ import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk?version=4.0';
 import GtkPixbuf from 'gi://GdkPixbuf';
 
+import { get_spawn_command } from './utils.js';
+
 export const PresentationWindow = GObject.registerClass({
     GTypeName: 'PresentationWindow',
     Template: 'resource:///moe/nyarchlinux/updater/presentation.ui',
@@ -218,7 +220,8 @@ export const PresentationWindow = GObject.registerClass({
             this.destroy();
             this.mainWindow.window = null;
         } else if (command.startsWith('checkSuccess')) {
-            let stdout = await this.mainWindow.spawnv(['flatpak-spawn', '--host', 'bash', '-c', command.replace("checkSuccess ", "")]).catch(this.mainWindow.handleError.bind(this.mainWindow));
+            const spawn_cmd = get_spawn_command();
+            let stdout = await this.mainWindow.spawnv([...spawn_cmd, 'bash', '-c', command.replace("checkSuccess ", "")]).catch(this.mainWindow.handleError.bind(this.mainWindow));
             if (stdout) stdout = stdout.trim() === "true";
             const buttonBox = this.buttonBoxes[this._carousel.get_position()];
             if (!stdout) {
@@ -266,11 +269,13 @@ export const PresentationWindow = GObject.registerClass({
                     fullCommand += "\n" + command;
                 }
                 // wait for the terminal to finish executing the commands
-                await this.mainWindow.spawnv(['flatpak-spawn', '--host', 'gnome-terminal', '--', 'bash', '-c', fullCommand]).catch(this.mainWindow.handleError.bind(this.mainWindow));
+                const spawn_cmd = get_spawn_command();
+                await this.mainWindow.spawnv([...spawn_cmd, 'gnome-terminal', '--', 'bash', '-c', fullCommand]).catch(this.mainWindow.handleError.bind(this.mainWindow));
                 this.goTo(Number(this.slides) - 1);
                 return;
             }
-            this.mainWindow.spawnv(['flatpak-spawn', '--host','gnome-terminal', '--', 'bash', '-c', command]).catch(() => {});
+            const spawn_cmd = get_spawn_command();
+            this.mainWindow.spawnv([...spawn_cmd, 'gnome-terminal', '--', 'bash', '-c', command]).catch(() => {});
             const buttonBox = this.buttonBoxes[this._carousel.get_position()];
             const checkSuccessButton = buttonBox.find(button => button.label === 'Check Success');
             if (checkSuccessButton) {

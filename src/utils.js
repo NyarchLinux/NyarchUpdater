@@ -23,6 +23,23 @@
  * @param {string} type The type of log to be used (console[type])
  * @param {any[]} args The arguments to be logged
  */
+import GLib from 'gi://GLib';
+
+export function is_flatpak() {
+    if (GLib.getenv("container")) {
+        return true;
+    }
+    return false;
+}
+
+export function get_spawn_command() {
+    if (is_flatpak()) {
+        return ["flatpak-spawn", "--host"];
+    } else {
+        return [];
+    }
+}
+
 export function stackLog(type, ...args) {
     let initiator = 'unknown place';
     const e = new Error();
