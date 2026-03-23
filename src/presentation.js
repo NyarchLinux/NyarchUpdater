@@ -68,7 +68,7 @@ export const PresentationWindow = GObject.registerClass({
             ]
         };
         const lastSlide = {
-            icon: "check-round-outline-symbolic",
+            icon: "updater-check-round-outline-symbolic",
             iconclass: "success",
             title: `Done!`,
             body: "Nyarch has been updated. You can now enjoy the new release!",

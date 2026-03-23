@@ -80,7 +80,7 @@
                         <child type="suffix">
                           <object class="GtkButton" id="arch_success">
                             <property name="valign">center</property>
-                            <property name="icon-name">check-round-outline-symbolic</property>
+                            <property name="icon-name">updater-check-round-outline-symbolic</property>
                             <property name="visible">false</property>
                             <style>
                               <class name="flat" />
@@ -139,7 +139,7 @@
                         <child type="suffix">
                           <object class="GtkButton" id="flatpak_success">
                             <property name="valign">center</property>
-                            <property name="icon-name">check-round-outline-symbolic</property>
+                            <property name="icon-name">updater-check-round-outline-symbolic</property>
                             <property name="visible">false</property>
                             <style>
                               <class name="flat" />
@@ -198,7 +198,7 @@
                         <child type="suffix">
                           <object class="GtkButton" id="nyarch_success">
                             <property name="valign">center</property>
-                            <property name="icon-name">check-round-outline-symbolic</property>
+                            <property name="icon-name">updater-check-round-outline-symbolic</property>
                             <property name="visible">false</property>
                             <style>
                               <class name="flat" />
