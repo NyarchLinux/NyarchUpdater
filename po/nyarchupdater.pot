@@ -1,0 +1,82 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the nyarchupdater package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nyarchupdater\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-03 20:36+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/moe.nyarchlinux.updater.desktop.in:2 src/window.ui:8
+msgid "Nyarch Updater"
+msgstr ""
+
+#: data/moe.nyarchlinux.updater.desktop.in:3
+msgid "Keep your Nyarch Linux system up to date"
+msgstr ""
+
+#: data/moe.nyarchlinux.updater.metainfo.xml.in:7
+msgid "No description"
+msgstr ""
+
+#: src/window.ui:17
+msgid "Menu"
+msgstr ""
+
+#: src/window.ui:40
+msgid "Welcome"
+msgstr ""
+
+#: src/window.ui:48
+msgid "Overview of your available updates"
+msgstr ""
+
+#: src/window.ui:60
+msgid "Arch Linux Updates"
+msgstr ""
+
+#: src/window.ui:61
+msgid "Updates to packages and programs"
+msgstr ""
+
+#: src/window.ui:111 src/window.ui:170
+msgid "Checking for updates..."
+msgstr ""
+
+#: src/window.ui:120
+msgid "Flatpak Updates"
+msgstr ""
+
+#: src/window.ui:121
+msgid "Updates to flatpak programs"
+msgstr ""
+
+#: src/window.ui:179
+msgid "Nyarch Updates"
+msgstr ""
+
+#: src/window.ui:180
+msgid "Updates to user configuration and Nyarch"
+msgstr ""
+
+#: src/window.ui:240
+msgid "_Keyboard Shortcuts"
+msgstr ""
+
+#: src/window.ui:244
+msgid "_Common Issues & FAQ"
+msgstr ""
+
+#: src/window.ui:248
+msgid "_About NyarchUpdater"
+msgstr ""

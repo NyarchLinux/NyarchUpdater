@@ -1,0 +1,46 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the nyarchupdater package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+
+msgid ""
+msgstr ""
+"Project-Id-Version: nyarchupdater\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-23 20:58+0800\n"
+"PO-Revision-Date: 2026-03-23 20:58+0800\n"
+"Last-Translator: Skywind_Fox <Skywind_Fox@qq.com>\n"
+"Language-Team: Chinese(Simplified)\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/moe.nyarchlinux.updater.desktop.in:2
+msgid "Nyarch Updater"
+msgstr "Nyarch 更新器"
+
+#: data/moe.nyarchlinux.updater.desktop.in:3
+msgid "Keep your Nyarch Linux system up to date"
+msgstr "让你的 Nyarch Linux 系统保持最新状态"
+
+#: data/moe.nyarchlinux.updater.metainfo.xml.in:7
+msgid "No description"
+msgstr "暂无描述"
+
+#: src/window.ui:17
+msgid "Menu"
+msgstr "菜单"
+
+#: src/window.ui:240
+msgid "_Keyboard Shortcuts"
+msgstr "_键盘快捷键"
+
+#: src/window.ui:244
+msgid "_Common Issues & FAQ"
+msgstr "_常见问题与解答"
+
+#: src/window.ui:248
+msgid "_About NyarchUpdater"
+msgstr "_关于 NyarchUpdater"
